@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Meta / opis -->
-  <meta name="description" content="Codzienny podgląd podlewania i kondycji roślin." />
+  <meta name="description" content="Tygodniowy plan podlewania i kondycji roślin." />
   <meta name="theme-color" content="#2f7f3b" />
   <meta name="application-name" content="Moje kwiaty w domu" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -90,6 +90,17 @@
       font-size: 13px;
       opacity: 0.9;
     }
+    details,
+summary {
+  border: none !important;
+  border-left: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+summary::-webkit-details-marker {
+  display: none !important;
+}
+
 
     /* Karta licznika */
     .counter-card {
@@ -134,9 +145,6 @@
       border-left: 4px solid var(--green-main);
       padding-left: 10px;
       margin-left: -12px; /* wyrównanie, bo sekcja ma padding */
-}
-
-    .location-title {
       font-size: 17px;
       font-weight: 600;
       margin: 0 0 8px;
@@ -303,7 +311,7 @@
     .legend-label {
       font-weight: 600;
     }
-
+   
     /* Przycisk "góra" */
     #backToTop {
       position: fixed;
@@ -368,7 +376,7 @@
       </div>
       <div>
         <h1>Moje kwiaty w domu</h1>
-        <p>Codzienny podgląd podlewania i kondycji roślin.</p>
+        <p>Tygodniowy plan podlewania i kondycji roślin.</p>
       </div>
     </header>
 
