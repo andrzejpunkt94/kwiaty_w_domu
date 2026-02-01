@@ -2132,5 +2132,43 @@ summary::-webkit-details-marker {
     loadState();
     scheduleMidnightReset();
   </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const allSections = Array.from(document.querySelectorAll(".location-section"));
+
+  document.querySelectorAll(".water-checkbox").forEach(checkbox => {
+    checkbox.addEventListener("change", () => {
+      const details = checkbox.closest("details");
+      if (!details) return;
+
+      const section = details.closest(".location-section");
+      const plantCards = Array.from(section.querySelectorAll("details.plant-card"));
+      const index = plantCards.indexOf(details);
+
+      // Zamknij aktualną roślinę
+      details.open = false;
+
+      // Jeśli to NIE jest ostatnia roślina → przewiń do następnej
+      if (index < plantCards.length - 1) {
+        const next = plantCards[index + 1];
+        setTimeout(() => {
+          next.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 150);
+        return;
+      }
+
+      // Jeśli to OSTATNIA roślina → przejdź do kolejnej sekcji
+      const currentSectionIndex = allSections.indexOf(section);
+      const nextSection = allSections[currentSectionIndex + 1];
+
+      if (nextSection) {
+        setTimeout(() => {
+          nextSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 200);
+      }
+    });
+  });
+});
+</script>
 </body>
 </html>
