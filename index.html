@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Meta / opis -->
-  <meta name="description" content="Lekka, domowa aplikacja do codziennej kontroli podlewania i pielęgnacji roślin w domu." />
+  <meta name="description" content="Codzienny podgląd podlewania i kondycji roślin." />
   <meta name="theme-color" content="#2f7f3b" />
   <meta name="application-name" content="Moje kwiaty w domu" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -124,79 +124,6 @@
       font-weight: 600;
     }
 
-    /* Panel lokalizacji */
-    details.locations {
-      margin: 10px 0 14px;
-      border-radius: var(--radius-main);
-      background: #ffffff;
-      box-shadow: var(--shadow-soft);
-      padding: 6px 10px 10px;
-    }
-
-    details.locations > summary {
-      list-style: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 6px 4px;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--green-main);
-    }
-
-    details.locations > summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .summary-left {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .summary-chevron {
-      font-size: 18px;
-      transition: transform 0.2s ease;
-    }
-
-    details[open] .summary-chevron {
-      transform: rotate(90deg);
-    }
-
-    .locations-buttons {
-      margin-top: 6px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      padding: 4px 2px 2px;
-    }
-
-    .loc-btn {
-      width: 100%;
-      border-radius: 12px;
-      border: 1px solid var(--green-border);
-      background: #ffffff;
-      padding: 10px 0;
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--green-main);
-      text-align: center;
-      cursor: pointer;
-      transition: background 0.15s ease, transform 0.08s ease, box-shadow 0.15s ease;
-    }
-
-    .loc-btn:active {
-      transform: scale(0.98);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-      background: var(--green-soft);
-    }
-
-    .loc-btn.active {
-      background: var(--green-soft);
-      border-color: var(--green-main);
-    }
-
     /* Sekcje lokalizacji */
     .location-section {
       margin-top: 18px;
@@ -212,18 +139,9 @@
       color: var(--green-main);
     }
 
-    .location-title span.code {
-      font-size: 12px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid var(--green-border);
-      background: #ffffff;
-      color: var(--green-main);
-    }
-
     /* Karty roślin (akordeon) */
     .plant-card {
-      margin: 6px 0;
+      margin: 10px 0;
       border-radius: var(--radius-main);
       background: #ffffff;
       box-shadow: var(--shadow-soft);
@@ -264,6 +182,7 @@
     .plant-icons {
       font-size: 15px;
       white-space: nowrap;
+      margin-left: auto;
     }
 
     .plant-chevron {
@@ -301,7 +220,7 @@
     }
 
     .water-today {
-      margin-top: 8px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -328,11 +247,12 @@
     /* Domowe nawozy */
     .domowe-box {
       margin: 8px 0;
-      padding: 8px 10px;
+      padding: 8px 10px 8px 14px;
       border-radius: 10px;
       background: #ffffff;
       box-shadow: var(--shadow-soft);
       font-size: 13px;
+      border-left: 3px solid var(--green-main);
     }
 
     .domowe-title {
@@ -415,7 +335,7 @@
       </div>
       <div>
         <h1>Moje kwiaty w domu</h1>
-        <p>Codzienna, lekka kontrola podlewania i pielęgnacji</p>
+        <p>Codzienny podgląd podlewania i kondycji roślin.</p>
       </div>
     </header>
 
@@ -434,31 +354,9 @@
       </div>
     </section>
 
-    <!-- Panel lokalizacji -->
-    <details class="locations">
-      <summary>
-        <div class="summary-left">
-          <span class="material-symbols-outlined" style="font-size:18px;">place</span>
-          <span>Lokalizacje</span>
-        </div>
-        <span class="summary-chevron">›</span>
-      </summary>
-      <div class="locations-buttons">
-        <button class="loc-btn" data-target="SYP">SYP</button>
-        <button class="loc-btn" data-target="SAL">SAL</button>
-        <button class="loc-btn" data-target="KUCH">KUCH</button>
-        <button class="loc-btn" data-target="JADL">JADL</button>
-        <button class="loc-btn" data-target="ŁAZ">ŁAZ</button>
-        <button class="loc-btn" data-target="BIU">BIU</button>
-      </div>
-    </details>
-
-    <!-- ===================== SYP ===================== -->
+    <!-- ===================== Sypialnia ===================== -->
     <section class="location-section" id="loc-SYP">
-      <h2 class="location-title">
-        Sypialnia
-        <span class="code">SYP</span>
-      </h2>
+      <h2 class="location-title">Sypialnia</h2>
 
       <!-- Grubosz – SYP -->
       <details class="plant-card" data-location="SYP" data-plant-id="syp-grubosz-1">
@@ -471,6 +369,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Sypialnia, pod oknem dachowym, tendencja do przesuszania lub przelania.</span>
@@ -503,12 +407,6 @@
             <span class="plant-label">Wskazówki serwisowe:</span>
             <span class="plant-value">Sprawdzić bryłę korzeniową, zimą podlewać bardzo oszczędnie.</span>
           </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
-          </div>
         </div>
       </details>
 
@@ -523,6 +421,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Sypialnia, dalej od okna, dość ciemno.</span>
@@ -559,12 +463,6 @@
               Zapewnić różnicę temp. dzień/noc, dużo rozproszonego światła, usuwać zgniłe korzenie przy przesadzaniu.
             </span>
           </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
-          </div>
         </div>
       </details>
 
@@ -579,6 +477,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Na szafce w sypialni, z dala od okna.</span>
@@ -615,12 +519,6 @@
               Zwiększyć wilgotność (keramzyt + woda), nie stawiać przy kaloryferze.
             </span>
           </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
-          </div>
         </div>
       </details>
 
@@ -635,6 +533,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Na szafce w sypialni, z dala od okna dachowego.</span>
@@ -670,14 +574,8 @@
           <div class="plant-row">
             <span class="plant-label">Wskazówki serwisowe:</span>
             <span class="plant-value">
-              Zwiększyć wilgotność, nie przelewać, nie stawiać przy kaloryferze.
+              Zwiększyć wilgotność powietrza, nie przelewać, nie stawiać przy kaloryferze.
             </span>
-          </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
           </div>
         </div>
       </details>
@@ -693,6 +591,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Parapet PD w sypialni, dużo światła.</span>
@@ -731,12 +635,6 @@
               Idealna roślina „do zapominania”, podlewać rzadko, nie przelewać.
             </span>
           </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
-          </div>
         </div>
       </details>
 
@@ -751,6 +649,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Na szafce w sypialni, z dala od okna.</span>
@@ -783,22 +687,13 @@
             <span class="plant-label">Wskazówki serwisowe:</span>
             <span class="plant-value">Nie przelewać, nie martwić się lekkim przesuszeniem.</span>
           </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
-          </div>
         </div>
       </details>
     </section>
 
-    <!-- ===================== SAL ===================== -->
+    <!-- ===================== Salon ===================== -->
     <section class="location-section" id="loc-SAL">
-      <h2 class="location-title">
-        Salon
-        <span class="code">SAL</span>
-      </h2>
+      <h2 class="location-title">Salon</h2>
 
       <!-- Żyworódka – SAL -->
       <details class="plant-card" data-location="SAL" data-plant-id="sal-zyworodka-1">
@@ -811,6 +706,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Parapet PD‑Zach, dużo światła.</span>
@@ -843,12 +744,6 @@
             <span class="plant-label">Wskazówki serwisowe:</span>
             <span class="plant-value">Przyciąć wiosną, ukorzenić wierzchołki, nie przelewać.</span>
           </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
-          </div>
         </div>
       </details>
 
@@ -863,6 +758,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko:</span>
             <span class="plant-value">
@@ -885,12 +786,6 @@
               Lubi ciasną doniczkę, rośnie w kępach, przesadzanie co 2–3 lata.
             </span>
           </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
-          </div>
         </div>
       </details>
 
@@ -905,6 +800,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko:</span>
             <span class="plant-value">
@@ -925,12 +826,6 @@
             <span class="plant-label">Doniczka / przesadzanie:</span>
             <span class="plant-value">Ciasna doniczka, przesadzanie co 2–3 lata.</span>
           </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
-          </div>
         </div>
       </details>
 
@@ -945,6 +840,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko:</span>
             <span class="plant-value">
@@ -967,12 +868,6 @@
               Lubi luźniejszą doniczkę, szybko rośnie, przesadzanie co 1–2 lata.
             </span>
           </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
-          </div>
         </div>
       </details>
 
@@ -987,6 +882,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Parapet PD i PD‑Zach, jasne stanowisko.</span>
@@ -1025,12 +926,6 @@
               Nie przestawiać w czasie zawiązywania pąków, podlewać równomiernie, unikać szoków temperaturowych.
             </span>
           </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
-          </div>
         </div>
       </details>
 
@@ -1045,6 +940,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Parapet PD i PD‑Zach, bardzo jasno.</span>
@@ -1081,12 +982,6 @@
               Regularnie usuwać przekwitłe kwiaty, zapewnić dużo światła i przewiew.
             </span>
           </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
-          </div>
         </div>
       </details>
 
@@ -1101,6 +996,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Parapet zachodni, jasne stanowisko.</span>
@@ -1139,22 +1040,13 @@
               Ustawić w jednym miejscu i nie przestawiać, podlewać równomiernie, unikać skrajności.
             </span>
           </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
-          </div>
         </div>
       </details>
     </section>
 
-    <!-- ===================== KUCH ===================== -->
+    <!-- ===================== Kuchnia ===================== -->
     <section class="location-section" id="loc-KUCH">
-      <h2 class="location-title">
-        Kuchnia
-        <span class="code">KUCH</span>
-      </h2>
+      <h2 class="location-title">Kuchnia</h2>
 
       <!-- Epipremnum 1 – KUCH -->
       <details class="plant-card" data-location="KUCH" data-plant-id="kuch-epipremnum-1">
@@ -1167,6 +1059,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Na szafkach w kuchni, jasne stanowisko.</span>
@@ -1205,12 +1103,6 @@
               Przycinać wierzchołki dla zagęszczenia, ukorzeniać w wodzie, lubi wilgotne powietrze.
             </span>
           </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
-          </div>
         </div>
       </details>
 
@@ -1225,7 +1117,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
-          <!-- Ten sam opis, inne „stanowisko obecne” jeśli chcesz doprecyzować -->
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Na szafkach w kuchni, bliżej okna.</span>
@@ -1254,12 +1151,6 @@
             <span class="plant-label">Wskazówki serwisowe:</span>
             <span class="plant-value">Jak wyżej.</span>
           </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
-          </div>
         </div>
       </details>
 
@@ -1274,6 +1165,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">
@@ -1314,12 +1211,6 @@
               Unikać kaloryferów, zapewnić wyższą wilgotność powietrza, można lekko zraszać (nie w pełnym słońcu).
             </span>
           </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
-          </div>
         </div>
       </details>
 
@@ -1334,7 +1225,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
-          <!-- Ten sam opis, inne drobne stanowisko -->
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Parapet w kuchni, jasne, ale nie gorące miejsce.</span>
@@ -1363,22 +1259,13 @@
             <span class="plant-label">Wskazówki serwisowe:</span>
             <span class="plant-value">Jak wyżej.</span>
           </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
-          </div>
         </div>
       </details>
     </section>
 
-    <!-- ===================== JADL ===================== -->
+    <!-- ===================== Jadalnia ===================== -->
     <section class="location-section" id="loc-JADL">
-      <h2 class="location-title">
-        Jadalnia
-        <span class="code">JADL</span>
-      </h2>
+      <h2 class="location-title">Jadalnia</h2>
 
       <!-- Grubosz – JADL -->
       <details class="plant-card" data-location="JADL" data-plant-id="jadl-grubosz-1">
@@ -1391,6 +1278,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Jadalnia, ok. 3 m od okna balkonowego.</span>
@@ -1403,29 +1296,23 @@
           </div>
           <div class="plant-row">
             <span class="plant-label">Podlewanie:</span>
-            <span class="plant-value">Jak w SYP – co 2–3 tygodnie, po przeschnięciu podłoża.</span>
+            <span class="plant-value">Jak w sypialni – co 2–3 tygodnie, po przeschnięciu podłoża.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Nawożenie:</span>
-            <span class="plant-value">Jak w SYP – 1×/miesiąc w sezonie.</span>
+            <span class="plant-value">Jak w sypialni – 1×/miesiąc w sezonie.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Doniczka / przesadzanie:</span>
-            <span class="plant-value">Jak w SYP – ciasna doniczka, co 2–3 lata.</span>
+            <span class="plant-value">Jak w sypialni – ciasna doniczka, co 2–3 lata.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Typowe problemy:</span>
-            <span class="plant-value">Jak w SYP.</span>
+            <span class="plant-value">Jak w sypialni.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Wskazówki serwisowe:</span>
-            <span class="plant-value">Jak w SYP.</span>
-          </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
+            <span class="plant-value">Jak w sypialni.</span>
           </div>
         </div>
       </details>
@@ -1441,7 +1328,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
-          <!-- Ten sam opis co w SAL -->
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko:</span>
             <span class="plant-value">Jasne, rozproszone światło w jadalni.</span>
@@ -1458,12 +1350,6 @@
             <span class="plant-label">Doniczka / przesadzanie:</span>
             <span class="plant-value">Ciasna doniczka, co 2–3 lata.</span>
           </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
-          </div>
         </div>
       </details>
 
@@ -1478,40 +1364,39 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
-          <!-- Jak w SAL, inne stanowisko -->
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Jadalnia, blisko okna balkonowego, bardzo jasno.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko zalecane:</span>
-            <span class="plant-value">Jak w SAL – dużo słońca i przewiew.</span>
+            <span class="plant-value">Jak w salonie – dużo słońca i przewiew.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Podlewanie:</span>
-            <span class="plant-value">Jak w SAL – obficie po przeschnięciu.</span>
+            <span class="plant-value">Jak w salonie – obficie po przeschnięciu.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Nawożenie:</span>
-            <span class="plant-value">Jak w SAL – co 7–10 dni w sezonie.</span>
+            <span class="plant-value">Jak w salonie – co 7–10 dni w sezonie.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Doniczka / przesadzanie:</span>
-            <span class="plant-value">Jak w SAL.</span>
+            <span class="plant-value">Jak w salonie.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Typowe problemy:</span>
-            <span class="plant-value">Jak w SAL.</span>
+            <span class="plant-value">Jak w salonie.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Wskazówki serwisowe:</span>
-            <span class="plant-value">Jak w SAL.</span>
-          </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
+            <span class="plant-value">Jak w salonie.</span>
           </div>
         </div>
       </details>
@@ -1527,6 +1412,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Przy oknie balkonowym na PD stronę.</span>
@@ -1565,12 +1456,6 @@
               Przecierać liście z kurzu, unikać bardzo twardej, wapiennej wody.
             </span>
           </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
-          </div>
         </div>
       </details>
 
@@ -1585,6 +1470,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Przy oknie balkonowym zach strona.</span>
@@ -1623,12 +1514,6 @@
               Utrzymywać umiarkowaną wilgotność, zapewnić dobrą cyrkulację powietrza.
             </span>
           </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
-          </div>
         </div>
       </details>
 
@@ -1643,40 +1528,39 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
-          <!-- Jak w KUCH, inne stanowisko -->
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Na szafkach w jadalni, jasne stanowisko.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko zalecane:</span>
-            <span class="plant-value">Jak w KUCH – jasne, rozproszone światło.</span>
+            <span class="plant-value">Jak w kuchni – jasne, rozproszone światło.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Podlewanie:</span>
-            <span class="plant-value">Jak w KUCH – co 7–10 dni.</span>
+            <span class="plant-value">Jak w kuchni – co 7–10 dni.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Nawożenie:</span>
-            <span class="plant-value">Jak w KUCH.</span>
+            <span class="plant-value">Jak w kuchni.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Doniczka / przesadzanie:</span>
-            <span class="plant-value">Jak w KUCH.</span>
+            <span class="plant-value">Jak w kuchni.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Typowe problemy:</span>
-            <span class="plant-value">Jak w KUCH.</span>
+            <span class="plant-value">Jak w kuchni.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Wskazówki serwisowe:</span>
-            <span class="plant-value">Jak w KUCH.</span>
-          </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
+            <span class="plant-value">Jak w kuchni.</span>
           </div>
         </div>
       </details>
@@ -1692,7 +1576,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
-          <!-- Jak wyżej -->
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Na szafkach w jadalni, bliżej okna.</span>
@@ -1721,12 +1610,6 @@
             <span class="plant-label">Wskazówki serwisowe:</span>
             <span class="plant-value">Jak wyżej.</span>
           </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
-          </div>
         </div>
       </details>
 
@@ -1741,6 +1624,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Przy oknie balkonowym zach strona (jadalnia).</span>
@@ -1779,22 +1668,13 @@
               Regularnie przycinać i ukorzeniać w wodzie, zapewnić dużo światła, szczególnie zimą.
             </span>
           </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
-          </div>
         </div>
       </details>
     </section>
 
-    <!-- ===================== ŁAZ ===================== -->
+    <!-- ===================== Łazienka ===================== -->
     <section class="location-section" id="loc-ŁAZ">
-      <h2 class="location-title">
-        Łazienka
-        <span class="code">ŁAZ</span>
-      </h2>
+      <h2 class="location-title">Łazienka</h2>
 
       <!-- Szczawik trójkątny – ŁAZ -->
       <details class="plant-card" data-location="ŁAZ" data-plant-id="laz-szczawik-1">
@@ -1807,6 +1687,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Kilka stanowisk w domu, tu – łazienka, wilgotniejsze powietrze.</span>
@@ -1845,22 +1731,13 @@
               Może mieć okres spoczynku – wtedy ograniczyć podlewanie, pozwolić liściom zaschnąć i odrosnąć.
             </span>
           </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
-          </div>
         </div>
       </details>
     </section>
 
-    <!-- ===================== BIU ===================== -->
+    <!-- ===================== Biuro ===================== -->
     <section class="location-section" id="loc-BIU">
-      <h2 class="location-title">
-        Biuro
-        <span class="code">BIU</span>
-      </h2>
+      <h2 class="location-title">Biuro</h2>
 
       <!-- Cissus 3 – BIU -->
       <details class="plant-card" data-location="BIU" data-plant-id="biu-cissus-3">
@@ -1873,40 +1750,39 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
-          <!-- Jak w KUCH, inne pomieszczenie -->
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Biuro, jasne stanowisko, z dala od kaloryfera.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko zalecane:</span>
-            <span class="plant-value">Jak w KUCH – chłodniejsze, jasne, bez gorącego powietrza.</span>
+            <span class="plant-value">Jak w kuchni – chłodniejsze, jasne, bez gorącego powietrza.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Podlewanie:</span>
-            <span class="plant-value">Jak w KUCH – co 5–7 dni.</span>
+            <span class="plant-value">Jak w kuchni – co 5–7 dni.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Nawożenie:</span>
-            <span class="plant-value">Jak w KUCH.</span>
+            <span class="plant-value">Jak w kuchni.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Doniczka / przesadzanie:</span>
-            <span class="plant-value">Jak w KUCH.</span>
+            <span class="plant-value">Jak w kuchni.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Typowe problemy:</span>
-            <span class="plant-value">Jak w KUCH.</span>
+            <span class="plant-value">Jak w kuchni.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Wskazówki serwisowe:</span>
-            <span class="plant-value">Jak w KUCH.</span>
-          </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
+            <span class="plant-value">Jak w kuchni.</span>
           </div>
         </div>
       </details>
@@ -1922,7 +1798,12 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
-          <!-- Jak wyżej -->
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Biuro, inne okno, podobne warunki.</span>
@@ -1951,12 +1832,6 @@
             <span class="plant-label">Wskazówki serwisowe:</span>
             <span class="plant-value">Jak wyżej.</span>
           </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
-          </div>
         </div>
       </details>
 
@@ -1971,40 +1846,39 @@
           <span class="plant-chevron">›</span>
         </summary>
         <div class="plant-body">
-          <!-- Jak w JADL, inne pomieszczenie -->
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Biuro, przy oknie, jasne stanowisko.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Stanowisko zalecane:</span>
-            <span class="plant-value">Jak w JADL – bardzo jasne, bez palącego słońca.</span>
+            <span class="plant-value">Jak w jadalni – bardzo jasne, bez palącego słońca.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Podlewanie:</span>
-            <span class="plant-value">Jak w JADL – co 5–7 dni.</span>
+            <span class="plant-value">Jak w jadalni – co 5–7 dni.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Nawożenie:</span>
-            <span class="plant-value">Jak w JADL.</span>
+            <span class="plant-value">Jak w jadalni.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Doniczka / przesadzanie:</span>
-            <span class="plant-value">Jak w JADL.</span>
+            <span class="plant-value">Jak w jadalni.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Typowe problemy:</span>
-            <span class="plant-value">Jak w JADL.</span>
+            <span class="plant-value">Jak w jadalni.</span>
           </div>
           <div class="plant-row">
             <span class="plant-label">Wskazówki serwisowe:</span>
-            <span class="plant-value">Jak w JADL.</span>
-          </div>
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox" />
-            </label>
+            <span class="plant-value">Jak w jadalni.</span>
           </div>
         </div>
       </details>
@@ -2014,10 +1888,7 @@
 
     <!-- ===================== DOMOWE NAWOZY I BIOSTYMULATORY ===================== -->
     <section class="location-section" id="loc-DOMOWE">
-      <h2 class="location-title">
-        Domowe nawozy i biostymulatory
-        <span class="code">INFO</span>
-      </h2>
+      <h2 class="location-title">Domowe nawozy i biostymulatory</h2>
 
       <details class="plant-card">
         <summary>
@@ -2111,6 +1982,12 @@
         </div>
       </details>
     </section>
+
+    <!-- STOPKA / META -->
+    <p style="text-align:center; font-size:12px; color:#5b6c5c; margin-top:20px;">
+      TWOJE KWIATY • wersja mobilna<br>
+      Stworzona z miłości do roślin 🌿
+    </p>
   </main>
 
   <!-- Przycisk "góra" -->
@@ -2130,7 +2007,6 @@
 
     const plantCards = Array.from(document.querySelectorAll(".plant-card"));
     const checkboxes = Array.from(document.querySelectorAll(".water-checkbox"));
-    const locationButtons = Array.from(document.querySelectorAll(".loc-btn"));
 
     // Ustaw licznik total na liczbę roślin (checkboxów)
     wateredTotalSpan.textContent = checkboxes.length.toString();
@@ -2261,22 +2137,6 @@
         wateredTodaySpan.textContent = count.toString();
         updateBadgeText(count, checkboxes.length);
         saveState();
-      });
-    });
-
-    // Panel lokalizacji – przewijanie do sekcji
-    function scrollToLocation(code) {
-      const section = document.getElementById("loc-" + code);
-      if (!section) return;
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-
-    locationButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        const target = btn.getAttribute("data-target");
-        locationButtons.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        scrollToLocation(target);
       });
     });
 
