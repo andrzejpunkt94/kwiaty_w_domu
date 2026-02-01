@@ -143,10 +143,12 @@ summary::-webkit-details-marker {
 
     /* Sekcje lokalizacji – pionowa kreska */
     .location-section {
-      margin-top: 18px;
-      padding-left: 12px;
-      border-left: none;
-    }
+  margin-top: 18px;
+  margin-bottom: 32px;
+  padding-left: 12px;
+  border-left: none;
+}
+
     .location-title {
       border-left: 4px solid var(--green-main);
       padding-left: 10px;
@@ -297,11 +299,6 @@ summary::-webkit-details-marker {
       line-height: 1.5;
     }
 
-    .section-divider {
-      margin: 18px 0 10px;
-      border-top: 1px dashed #ccc;
-    }
-
     /* Legenda ikon */
     .legend-box {
       margin: 16px 0 0;
@@ -367,21 +364,24 @@ summary::-webkit-details-marker {
     button:focus-visible,
     summary:focus-visible,
     input[type="checkbox"]:focus-visible {
-      outline: var(--focus-outline);
-      outline-offset: 2px;
+    outline: var(--focus-outline);
+    outline-offset: 2px;
     }
 
-    @media (min-width: 768px) {
-      main {
-        padding: 20px 18px 90px;
-      }
-      header h1 {
-        font-size: 24px;
-      }
-      .plant-card > summary {
-        font-size: 15px;
-      }
+   .section-divider {
+    display: none;
     }
+    @media (min-width: 768px) {
+    main {
+    padding: 20px 18px 90px;
+    }
+    header h1 {
+    font-size: 24px;
+    }
+   .plant-card > summary {
+    font-size: 15px;
+    }
+}
   </style>
 </head>
 <body>
@@ -1844,7 +1844,7 @@ summary::-webkit-details-marker {
         </div>
       </details>
     </section>
-    <div class="section-divider"></div>
+
     <!-- ===================== DOMOWE NAWOZY I BIOSTYMULATORY ===================== -->
     <section class="location-section" id="loc-DOMOWE">
       <h2 class="location-title">Domowe nawozy i biostymulatory</h2>
@@ -2206,5 +2206,3 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
-
-
