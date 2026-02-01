@@ -25,364 +25,390 @@
   <link rel="icon" type="image/png" href="icons/icon-192.png">
 
   <style>
-    :root {
-      --green-main: #2f7f3b;
-      --green-soft: #e7f3ea;
-      --green-border: #9ac5a4;
-      --bg-main: #faf9f6;
-      --text-main: #1f1f1f;
-      --radius-main: 14px;
-      --shadow-soft: 0 4px 10px rgba(0, 0, 0, 0.06);
-      --focus-outline: 2px solid #2f7f3b;
-    }
+/* ========================= */
+/*        DESIGN TOKENS      */
+/* ========================= */
 
-    * {
-      box-sizing: border-box;
-    }
+:root {
+  /* Kolory */
+  --green-main: #2f7f3b;
+  --green-soft: #e7f3ea;
+  --green-border: #9ac5a4;
+  --bg-main: #faf9f6;
+  --text-main: #1f1f1f;
 
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg-main);
-      color: var(--text-main);
-    }
+  /* Layout */
+  --radius-main: 14px;
+  --shadow-soft: 0 4px 10px rgba(0, 0, 0, 0.06);
 
-    main {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 16px 14px 80px;
-    }
+  /* Spacing system (OneUI-like) */
+  --space-xxs: 4px;
+  --space-xs: 6px;
+  --space-s: 8px;
+  --space-m: 12px;
+  --space-l: 18px;
+  --space-xl: 24px;
+  --space-xxl: 32px;
 
-    header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px 14px;
-      margin-bottom: 8px;
-      border-radius: 0 0 18px 18px;
-      background: linear-gradient(135deg, #2f7f3b, #4fa86a);
-      color: #fff;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
-    }
+  /* Accessibility */
+  --focus-outline: 2px solid #2f7f3b;
+}
 
-    header .icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.16);
-    }
+/* ========================= */
+/*        GLOBAL RESET       */
+/* ========================= */
 
-    .material-symbols-outlined {
-      font-variation-settings:
-        "FILL" 0,
-        "wght" 500,
-        "GRAD" 0,
-        "opsz" 24;
-      font-size: 26px;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    header h1 {
-      font-size: 22px;
-      margin: 0;
-      letter-spacing: 0.02em;
-    }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+}
 
-    header p {
-      margin: 2px 0 0;
-      font-size: 13px;
-      opacity: 0.9;
-    }
-    details,
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--space-l) var(--space-m) 80px;
+}
+
+/* ========================= */
+/*          HEADER           */
+/* ========================= */
+
+header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  padding: var(--space-m) var(--space-m) var(--space-l);
+  margin-bottom: var(--space-s);
+  border-radius: 0 0 18px 18px;
+  background: linear-gradient(135deg, #2f7f3b, #4fa86a);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+header .icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+header h1 {
+  font-size: 22px;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+header p {
+  margin: 2px 0 0;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+/* ========================= */
+/*       COUNTER CARD        */
+/* ========================= */
+
+.counter-card {
+  margin: var(--space-l) 0 var(--space-s);
+  padding: var(--space-m);
+  border-radius: var(--radius-main);
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+}
+
+.counter-main {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--green-main);
+}
+
+.counter-sub {
+  font-size: 12px;
+  color: #555;
+}
+
+.counter-badge {
+  padding: var(--space-xs) var(--space-s);
+  border-radius: 999px;
+  background: var(--green-soft);
+  color: var(--green-main);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ========================= */
+/*       LOCATION SECTIONS   */
+/* ========================= */
+
+.location-section {
+  margin: var(--space-l) 0 var(--space-xxl);
+  padding-left: var(--space-m);
+}
+
+.location-title {
+  border-left: 4px solid var(--green-main);
+  padding-left: var(--space-s);
+  margin-left: calc(-1 * var(--space-m));
+  margin-bottom: var(--space-s);
+  font-size: 17px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: var(--green-main);
+}
+
+/* ========================= */
+/*         PLANT CARDS       */
+/* ========================= */
+
+details,
 summary {
   border: none !important;
-  border-left: none !important;
   outline: none !important;
   box-shadow: none !important;
 }
+
 summary::-webkit-details-marker {
   display: none !important;
 }
 
-
-    /* Karta licznika */
-    .counter-card {
-      margin: 14px 0 10px;
-      padding: 12px 14px;
-      border-radius: var(--radius-main);
-      background: #ffffff;
-      box-shadow: var(--shadow-soft);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .counter-main {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--green-main);
-    }
-
-    .counter-sub {
-      font-size: 12px;
-      color: #555;
-    }
-
-    .counter-badge {
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: var(--green-soft);
-      color: var(--green-main);
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    /* Sekcje lokalizacji – pionowa kreska */
-    .location-section {
-  margin-top: 18px;
-  margin-bottom: 32px;
-  padding-left: 12px;
-  border-left: none;
+.plant-card {
+  margin: var(--space-m) 0;
+  border-radius: var(--radius-main);
+  background: #fff;
+  box-shadow: var(--shadow-soft);
 }
 
-    .location-title {
-      border-left: 4px solid var(--green-main);
-      padding-left: 10px;
-      margin-left: -12px; /* wyrównanie, bo sekcja ma padding */
-      font-size: 17px;
-      font-weight: 600;
-      margin: 0 0 8px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--green-main);
-    }
+.plant-card > summary {
+  cursor: pointer;
+  padding: var(--space-m);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+  font-size: 14px;
+  font-weight: 600;
+}
 
-    /* Karty roślin (akordeon) */
-    .plant-card {
-      margin: 10px 0;
-      border-radius: var(--radius-main);
-      background: #ffffff;
-      box-shadow: var(--shadow-soft);
-      overflow: hidden;
-    }
+.plant-main-title {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xxs);
+}
 
-    .plant-card > summary {
-      list-style: none;
-      cursor: pointer;
-      padding: 10px 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      font-size: 14px;
-      font-weight: 600;
-    }
+.plant-name {
+  font-size: 14px;
+}
 
-    .plant-card > summary::-webkit-details-marker {
-      display: none;
-    }
+.plant-latin {
+  font-size: 11px;
+  color: #666;
+}
 
-    .plant-main-title {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
+.plant-icons {
+  font-size: 15px;
+  white-space: nowrap;
+  margin-left: auto;
+}
 
-    .plant-name {
-      font-size: 14px;
-    }
+.plant-chevron {
+  font-size: 18px;
+  color: #999;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
 
-    .plant-latin {
-      font-size: 11px;
-      color: #666;
-    }
+details[open] > summary .plant-chevron {
+  transform: rotate(90deg);
+}
 
-    .plant-icons {
-      font-size: 15px;
-      white-space: nowrap;
-      margin-left: auto;
-    }
+.plant-body {
+  padding: var(--space-s) var(--space-m) var(--space-m);
+  border-top: 1px solid #f0f0f0;
+  font-size: 13px;
+  line-height: 1.4;
+}
 
-    .plant-chevron {
-      font-size: 18px;
-      color: #999;
-      flex-shrink: 0;
-      transition: transform 0.2s ease;
-    }
+.plant-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-s);
+  margin: var(--space-xs) 0;
+}
 
-    details[open] > summary .plant-chevron {
-      transform: rotate(90deg);
-    }
+.plant-label {
+  font-weight: 600;
+  color: #555;
+}
 
-    .plant-body {
-      padding: 8px 12px 10px;
-      border-top: 1px solid #f0f0f0;
-      font-size: 13px;
-      line-height: 1.4;
-     }
+.plant-value {
+  text-align: right;
+}
 
-   /* Podświetlenie następnej rośliny (tryb turbo) */
-   .highlight-next {
-      animation: highlightFade 1.2s ease-out;
-     }
+/* ========================= */
+/*        WATER TODAY        */
+/* ========================= */
 
-   @keyframes highlightFade {
-     0%   { background-color: #e7f3ea; }
-     100% { background-color: transparent; }
-    }
+.water-today {
+  margin-bottom: var(--space-s);
+  padding: var(--space-s);
+  border-radius: 10px;
+  background: var(--green-soft);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+}
 
-   .plant-row {
-     display: flex;
-     justify-content: space-between;
-     gap: 10px;
-     margin: 4px 0;
-    }
+.water-today span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
 
-    .plant-label {
-      font-weight: 600;
-      color: #555;
-    }
+.water-today input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--green-main);
+  cursor: pointer;
+}
 
-    .plant-value {
-      text-align: right;
-    }
+/* ========================= */
+/*      DOMOWE NAWOZY        */
+/* ========================= */
 
-    .water-today {
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 6px 8px;
-      border-radius: 10px;
-      background: var(--green-soft);
-      font-size: 13px;
-    }
+.domowe-box {
+  margin: var(--space-s) 0;
+  padding: var(--space-s) var(--space-m);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+  font-size: 13px;
+  border-left: 3px solid var(--green-main);
+}
 
-    .water-today span {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
+.domowe-title {
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+  color: var(--green-main);
+}
 
-    .water-today input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      accent-color: var(--green-main);
-      cursor: pointer;
-    }
+.small {
+  font-size: 12px;
+  line-height: 1.5;
+}
 
-    /* Domowe nawozy */
-    .domowe-box {
-      margin: 8px 0;
-      padding: 8px 10px 8px 14px;
-      border-radius: 10px;
-      background: #ffffff;
-      box-shadow: var(--shadow-soft);
-      font-size: 13px;
-      border-left: 3px solid var(--green-main);
-    }
+/* ========================= */
+/*         LEGEND BOX        */
+/* ========================= */
 
-    .domowe-title {
-      font-weight: 600;
-      margin-bottom: 4px;
-      color: var(--green-main);
-    }
+.legend-box {
+  margin-top: var(--space-l);
+  padding: var(--space-m);
+  border-radius: var(--radius-main);
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+  font-size: 13px;
+}
 
-    .small {
-      font-size: 12px;
-      line-height: 1.5;
-    }
+.legend-title {
+  font-weight: 600;
+  margin-bottom: var(--space-s);
+  color: var(--green-main);
+}
 
-    /* Legenda ikon */
-    .legend-box {
-      margin: 16px 0 0;
-      padding: 10px 12px;
-      border-radius: var(--radius-main);
-      background: #ffffff;
-      box-shadow: var(--shadow-soft);
-      font-size: 13px;
-    }
+.legend-row {
+  display: flex;
+  justify-content: space-between;
+  margin: var(--space-xs) 0;
+}
 
-    .legend-title {
-      font-weight: 600;
-      margin-bottom: 6px;
-      color: var(--green-main);
-    }
+.legend-label {
+  font-weight: 600;
+}
 
-    .legend-row {
-      display: flex;
-      justify-content: space-between;
-      margin: 2px 0;
-    }
+/* ========================= */
+/*       BACK TO TOP         */
+/* ========================= */
 
-    .legend-label {
-      font-weight: 600;
-    }
-   
-    /* Przycisk "góra" */
-    #backToTop {
-      position: fixed;
-      right: 16px;
-      bottom: 18px;
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      border: none;
-      background: var(--green-main);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
-      cursor: pointer;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease, transform 0.1s ease;
-      z-index: 20;
-    }
+#backToTop {
+  position: fixed;
+  right: var(--space-l);
+  bottom: var(--space-l);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: var(--green-main);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+  z-index: 20;
+}
 
-    #backToTop.visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
+#backToTop.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
 
-    #backToTop:active {
-      transform: scale(0.95);
-    }
+#backToTop:active {
+  transform: scale(0.95);
+}
 
-    #backToTop span {
-      font-size: 24px;
-    }
+#backToTop span {
+  font-size: 24px;
+}
 
-    /* Focus styles (dostępność) */
-    button:focus-visible,
-    summary:focus-visible,
-    input[type="checkbox"]:focus-visible {
-    outline: var(--focus-outline);
-    outline-offset: 2px;
-    }
+/* ========================= */
+/*        ACCESSIBILITY      */
+/* ========================= */
 
-   .section-divider {
-    display: none;
-    }
-    @media (min-width: 768px) {
-    main {
-    padding: 20px 18px 90px;
-    }
-    header h1 {
+button:focus-visible,
+summary:focus-visible,
+input[type="checkbox"]:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+}
+
+/* ========================= */
+/*         MEDIA QUERY       */
+/* ========================= */
+
+@media (min-width: 768px) {
+  main {
+    padding: var(--space-xl) var(--space-l) 90px;
+  }
+  header h1 {
     font-size: 24px;
-    }
-   .plant-card > summary {
+  }
+  .plant-card > summary {
     font-size: 15px;
-    }
+  }
 }
-  </style>
+</style>
+
 </head>
 <body>
   <main>
