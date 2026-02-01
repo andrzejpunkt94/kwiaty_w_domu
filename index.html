@@ -5,13 +5,16 @@
   <title>Moje kwiaty w domu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- PWA / app-like meta -->
+  <!-- Meta / opis -->
+  <meta name="description" content="Lekka, domowa aplikacja do codziennej kontroli podlewania i pielęgnacji roślin w domu." />
   <meta name="theme-color" content="#2f7f3b" />
   <meta name="application-name" content="Moje kwiaty w domu" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
 
-  <!-- Ikona rośliny z Google Fonts (Material Symbols) -->
+  <!-- Optymalizacja ładowania Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;600&display=swap" />
 
@@ -24,6 +27,7 @@
       --text-main: #1f1f1f;
       --radius-main: 14px;
       --shadow-soft: 0 4px 10px rgba(0, 0, 0, 0.06);
+      --focus-outline: 2px solid #2f7f3b;
     }
 
     * {
@@ -318,6 +322,7 @@
       width: 18px;
       height: 18px;
       accent-color: var(--green-main);
+      cursor: pointer;
     }
 
     /* Przycisk "góra" */
@@ -353,6 +358,14 @@
 
     #backToTop span {
       font-size: 24px;
+    }
+
+    /* Focus styles (dostępność) */
+    button:focus-visible,
+    summary:focus-visible,
+    input[type="checkbox"]:focus-visible {
+      outline: var(--focus-outline);
+      outline-offset: 2px;
     }
 
     @media (min-width: 768px) {
@@ -745,6 +758,43 @@
       });
     });
 
+    // Funkcja: lokalna data YYYY-MM-DD
+    function getLocalIsoDate() {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      return `${y}-${m}-${day}`;
+    }
+
+    // Funkcja: ms do lokalnej północy
+    function msUntilLocalMidnight() {
+      const now = new Date();
+      const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+      return tomorrow - now;
+    }
+
+    // Funkcja: reset stanu podlewania
+    function resetWateringState() {
+      const today = getLocalIsoDate();
+      localStorage.setItem(STORAGE_KEY_DATE, today);
+      localStorage.setItem(STORAGE_KEY_WATERED, JSON.stringify({}));
+      checkboxes.forEach(cb => (cb.checked = false));
+      wateredTodaySpan.textContent = "0";
+      updateBadgeText(0, plantCards.length);
+    }
+
+    // Zaplanowanie resetu o północy lokalnej
+    function scheduleMidnightReset() {
+      const first = msUntilLocalMidnight();
+      setTimeout(() => {
+        resetWateringState();
+        setInterval(() => {
+          resetWateringState();
+        }, 24 * 60 * 60 * 1000);
+      }, first);
+    }
+
     // Funkcja: aktualizacja badge tekstu
     function updateBadgeText(count, total) {
       if (count === 0) {
@@ -756,9 +806,19 @@
       }
     }
 
+    // Nadanie aria-label dla checkboxów
+    function initCheckboxAriaLabels() {
+      checkboxes.forEach(cb => {
+        const card = cb.closest(".plant-card");
+        const plantNameEl = card ? card.querySelector(".plant-name") : null;
+        const plantName = plantNameEl ? plantNameEl.textContent.trim() : "roślina";
+        cb.setAttribute("aria-label", `Podlane dziś: ${plantName}`);
+      });
+    }
+
     // Odczyt stanu z localStorage
     function loadState() {
-      const today = new Date().toISOString().slice(0, 10);
+      const today = getLocalIsoDate();
       const savedDate = localStorage.getItem(STORAGE_KEY_DATE);
       let savedWatered = {};
 
@@ -790,7 +850,7 @@
 
     // Zapis stanu do localStorage
     function saveState() {
-      const today = new Date().toISOString().slice(0, 10);
+      const today = getLocalIsoDate();
       localStorage.setItem(STORAGE_KEY_DATE, today);
 
       const state = {};
@@ -815,19 +875,6 @@
         saveState();
       });
     });
-
-    // Automatyczny reset o północy (sprawdzanie co minutę)
-    setInterval(() => {
-      const today = new Date().toISOString().slice(0, 10);
-      const savedDate = localStorage.getItem(STORAGE_KEY_DATE);
-      if (savedDate !== today) {
-        localStorage.setItem(STORAGE_KEY_DATE, today);
-        localStorage.setItem(STORAGE_KEY_WATERED, JSON.stringify({}));
-        checkboxes.forEach(cb => (cb.checked = false));
-        wateredTodaySpan.textContent = "0";
-        updateBadgeText(0, plantCards.length);
-      }
-    }, 60000);
 
     // Panel lokalizacji – przewijanie do sekcji
     function scrollToLocation(code) {
@@ -859,7 +906,20 @@
     });
 
     // Inicjalizacja
+    initCheckboxAriaLabels();
     loadState();
+    scheduleMidnightReset();
   </script>
+<div class="section-divider"></div>
+
+  <!-- STOPKA / META -->
+    <p style="text-align:center; font-size:12px; color:#5b6c5c; margin-top:20px;">
+      My Plant Pro • wersja mobilna<br>
+      Stworzona z miłości do kwiatów 🌿
+    </p>
+    <p class="small" style="margin-top:16px;color:#4b5b4c;">
+      Panel serwisowy roślin – wersja mobilna · aktualizacja: 2026-02-01
+    </p>
+  </div> <!-- /app-shell -->
 </body>
 </html>
