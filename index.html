@@ -1,37 +1,429 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Twoje kwiaty</title>
+  <meta charset="UTF-8" />
+  <title>Moje kwiaty w domu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link rel="stylesheet" href="style.css">
+  <!-- Meta / opis -->
+  <meta name="description" content="Tygodniowy plan podlewania i kondycji roślin." />
+  <meta name="theme-color" content="#2f7f3b" />
+  <meta name="application-name" content="Moje kwiaty w domu" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Kwiaty w domu">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+
+  <!-- Optymalizacja ładowania Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;600&display=swap" />
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <link rel="icon" type="image/png" href="icons/icon-192.png">
 
-  <meta name="theme-color" content="#2f7f3b">
+  <style>
+/* ========================= */
+/*        DESIGN TOKENS      */
+/* ========================= */
+
+:root {
+  /* Kolory */
+  --green-main: #2f7f3b;
+  --green-soft: #e7f3ea;
+  --green-border: #9ac5a4;
+  --bg-main: #faf9f6;
+  --text-main: #1f1f1f;
+
+  /* Layout */
+  --radius-main: 14px;
+  --shadow-soft: 0 4px 10px rgba(0, 0, 0, 0.06);
+
+  /* Spacing system (OneUI-like) */
+  --space-xxs: 4px;
+  --space-xs: 6px;
+  --space-s: 8px;
+  --space-m: 12px;
+  --space-l: 18px;
+  --space-xl: 24px;
+  --space-xxl: 32px;
+
+  /* Accessibility */
+  --focus-outline: 2px solid #2f7f3b;
+}
+
+/* ========================= */
+/*        GLOBAL RESET       */
+/* ========================= */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+}
+
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--space-l) var(--space-m) 80px;
+}
+
+/* ========================= */
+/*          HEADER           */
+/* ========================= */
+
+header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  padding: var(--space-m) var(--space-m) var(--space-l);
+  margin-bottom: var(--space-s);
+  border-radius: 0 0 18px 18px;
+  background: linear-gradient(135deg, #2f7f3b, #4fa86a);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+header .icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+header h1 {
+  font-size: 22px;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+header p {
+  margin: 2px 0 0;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+/* ========================= */
+/*       COUNTER CARD        */
+/* ========================= */
+
+.counter-card {
+  margin: var(--space-l) 0 var(--space-s);
+  padding: var(--space-m);
+  border-radius: var(--radius-main);
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+}
+
+.counter-main {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--green-main);
+}
+
+.counter-sub {
+  font-size: 12px;
+  color: #555;
+}
+
+.counter-badge {
+  padding: var(--space-xs) var(--space-s);
+  border-radius: 999px;
+  background: var(--green-soft);
+  color: var(--green-main);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ========================= */
+/*       LOCATION SECTIONS   */
+/* ========================= */
+
+.location-section {
+  margin: var(--space-l) 0 var(--space-xxl);
+  padding-left: var(--space-m);
+}
+
+.location-title {
+  border-left: 4px solid var(--green-main);
+  padding-left: var(--space-s);
+  margin-left: calc(-1 * var(--space-m));
+  margin-bottom: var(--space-s);
+  font-size: 17px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: var(--green-main);
+}
+
+/* ========================= */
+/*         PLANT CARDS       */
+/* ========================= */
+
+details,
+summary {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+summary::-webkit-details-marker {
+  display: none !important;
+}
+
+.plant-card {
+  margin: var(--space-m) 0;
+  border-radius: var(--radius-main);
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+}
+
+.plant-card > summary {
+  cursor: pointer;
+  padding: var(--space-m);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.plant-main-title {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xxs);
+}
+
+.plant-name {
+  font-size: 14px;
+}
+
+.plant-latin {
+  font-size: 11px;
+  color: #666;
+}
+
+.plant-icons {
+  font-size: 15px;
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+.plant-chevron {
+  font-size: 18px;
+  color: #999;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+details[open] > summary .plant-chevron {
+  transform: rotate(90deg);
+}
+
+.plant-body {
+  padding: var(--space-s) var(--space-m) var(--space-m);
+  border-top: 1px solid #f0f0f0;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.plant-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-s);
+  margin: var(--space-xs) 0;
+}
+
+.plant-label {
+  font-weight: 600;
+  color: #555;
+}
+
+.plant-value {
+  text-align: right;
+}
+
+/* ========================= */
+/*        WATER TODAY        */
+/* ========================= */
+
+.water-today {
+  margin-bottom: var(--space-s);
+  padding: var(--space-s);
+  border-radius: 10px;
+  background: var(--green-soft);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+}
+
+.water-today span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.water-today input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--green-main);
+  cursor: pointer;
+}
+
+/* ========================= */
+/*      DOMOWE NAWOZY        */
+/* ========================= */
+
+.domowe-box {
+  margin: var(--space-s) 0;
+  padding: var(--space-s) var(--space-m);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+  font-size: 13px;
+  border-left: 3px solid var(--green-main);
+}
+
+.domowe-title {
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+  color: var(--green-main);
+}
+
+.small {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* ========================= */
+/*         LEGEND BOX        */
+/* ========================= */
+
+.legend-box {
+  margin-top: var(--space-l);
+  padding: var(--space-m);
+  border-radius: var(--radius-main);
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+  font-size: 13px;
+}
+
+.legend-title {
+  font-weight: 600;
+  margin-bottom: var(--space-s);
+  color: var(--green-main);
+}
+
+.legend-row {
+  display: flex;
+  justify-content: space-between;
+  margin: var(--space-xs) 0;
+}
+
+.legend-label {
+  font-weight: 600;
+}
+
+/* ========================= */
+/*       BACK TO TOP         */
+/* ========================= */
+
+#backToTop {
+  position: fixed;
+  right: var(--space-l);
+  bottom: var(--space-l);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: var(--green-main);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+  z-index: 20;
+}
+
+#backToTop.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#backToTop:active {
+  transform: scale(0.95);
+}
+
+#backToTop span {
+  font-size: 24px;
+}
+
+/* ========================= */
+/*        ACCESSIBILITY      */
+/* ========================= */
+
+button:focus-visible,
+summary:focus-visible,
+input[type="checkbox"]:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+}
+
+/* ========================= */
+/*         MEDIA QUERY       */
+/* ========================= */
+
+@media (min-width: 768px) {
+  main {
+    padding: var(--space-xl) var(--space-l) 90px;
+  }
+  header h1 {
+    font-size: 24px;
+  }
+  .plant-card > summary {
+    font-size: 15px;
+  }
+}
+</style>
+
 </head>
-
 <body>
-
-  <!-- ===================== HEADER ===================== -->
-  <header class="app-header">
-    <div class="icon">
-      <span class="material-symbols-outlined">potted_plant</span>
-    </div>
-    <div>
-      <h1>Moje kwiaty w domu</h1>
-      <p>Tygodniowy plan podlewania i kondycji roślin.</p>
-    </div>
-  </header>
-
-  <!-- ===================== MAIN ===================== -->
   <main>
+    <header>
+      <div class="icon">
+        <span class="material-symbols-outlined">potted_plant</span>
+      </div>
+      <div>
+        <h1>Moje kwiaty w domu</h1>
+        <p>Tygodniowy plan podlewania i kondycji roślin.</p>
+      </div>
+    </header>
 
-    <!-- ===================== LICZNIK ===================== -->
-    <section class="counter-card" aria-labelledby="counter-heading">
-      <h2 id="counter-heading" class="sr-only">Podsumowanie podlewania</h2>
-
+    <!-- Licznik globalny -->
+    <section class="counter-card" aria-label="Podlane dziś">
       <div>
         <div class="counter-main">
           Podlane dziś: <span id="wateredToday">0</span>/<span id="wateredTotal">0</span>
@@ -40,13 +432,12 @@
           Liczone tylko na dziś, reset automatyczny o północy.
         </div>
       </div>
-
       <div class="counter-badge" id="counterBadgeText">
         Wszystko przed Tobą 🌱
       </div>
     </section>
 
-    <!-- ===================== SYPIALNIA ===================== -->
+    <!-- ===================== Sypialnia ===================== -->
     <section class="location-section" id="loc-SYP">
       <h2 class="location-title">Sypialnia</h2>
 
@@ -54,228 +445,627 @@
       <details class="plant-card" data-location="SYP" data-plant-id="syp-grubosz-1">
         <summary>
           <div class="plant-main-title">
-            <span class="plant-name">Grubosz</span>
+            <span class="plant-name">Grubosz - u Filipa</span>
             <span class="plant-latin">Crassula ovata</span>
           </div>
-          <div class="plant-icons" aria-hidden="true">💧 ☀️ 🧪</div>
+          <div class="plant-icons">💧 ☀️ 🧪</div>
           <span class="plant-chevron"></span>
         </summary>
-
         <div class="plant-body">
           <div class="water-today">
-            <span>
-              <span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>
-              Podlane dziś?
-            </span>
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
             <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
+              <input type="checkbox" class="water-checkbox" />
             </label>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
-            <span class="plant-value">Sypialnia, jasne stanowisko.</span>
+            <span class="plant-value">Sypialnia, pod oknem dachowym, tendencja do przesuszania lub przelania.</span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Stanowisko zalecane:</span>
-            <span class="plant-value">Jasne, dużo światła, może być słońce.</span>
+            <span class="plant-value">Może zostać, ale konieczna przepuszczalna mieszanka i kontrola korzeni.</span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Podlewanie:</span>
-            <span class="plant-value">Co 2–3 tygodnie, po przeschnięciu podłoża.</span>
+            <span class="plant-value">
+              Co 2–3 tygodnie, rano, wodą odstaną w temp. pokojowej. Dopiero po całkowitym przeschnięciu podłoża.
+            </span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Nawożenie:</span>
-            <span class="plant-value">1×/miesiąc w sezonie.</span>
+            <span class="plant-value">
+              1×/miesiąc IV–VIII, nawóz do kaktusów i sukulentów, delikatny humus 1×/miesiąc.
+            </span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Doniczka / przesadzanie:</span>
-            <span class="plant-value">Ciasna doniczka, co 2–3 lata.</span>
+            <span class="plant-value">Lubi ciasną doniczkę, przesadzanie co 2–3 lata lub gdy korzenie wychodzą dołem.</span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Typowe problemy:</span>
-            <span class="plant-value">Zbyt częste podlewanie.</span>
+            <span class="plant-value">Gnicie korzeni przy przelaniu, zrzucanie liści, wyciąganie przy małej ilości światła.</span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Wskazówki serwisowe:</span>
-            <span class="plant-value">Unikać przelania, zapewnić dużo światła.</span>
+            <span class="plant-value">Sprawdzić bryłę korzeniową, zimą podlewać bardzo oszczędnie.</span>
           </div>
         </div>
       </details>
 
-      <!-- Haworsja – SYP -->
-      <details class="plant-card" data-location="SYP" data-plant-id="syp-haworsja-1">
+      <!-- Storczyk – SYP -->
+      <details class="plant-card" data-location="SYP" data-plant-id="syp-storczyk-1">
         <summary>
           <div class="plant-main-title">
-            <span class="plant-name">Haworsja pasiasta</span>
-            <span class="plant-latin">Haworthia fasciata</span>
+            <span class="plant-name">Storczyk ćmówka (Phalaenopsis)</span>
+            <span class="plant-latin">Phalaenopsis</span>
           </div>
-          <div class="plant-icons" aria-hidden="true">💧 ☀️</div>
+          <div class="plant-icons">💧 ☁️ 🧪</div>
           <span class="plant-chevron"></span>
         </summary>
-
         <div class="plant-body">
           <div class="water-today">
-            <span>
-              <span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>
-              Podlane dziś?
-            </span>
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
             <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
+              <input type="checkbox" class="water-checkbox" />
             </label>
           </div>
-
           <div class="plant-row">
-            <span class="plant-label">Stanowisko:</span>
-            <span class="plant-value">Jasne, rozproszone światło.</span>
+            <span class="plant-label">Stanowisko obecne:</span>
+            <span class="plant-value">Sypialnia, dalej od okna, dość ciemno.</span>
           </div>
-
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko zalecane:</span>
+            <span class="plant-value">Bliżej okna zachodniego lub PD‑Zach, ale bez ostrego słońca.</span>
+          </div>
           <div class="plant-row">
             <span class="plant-label">Podlewanie:</span>
-            <span class="plant-value">Co 2–3 tygodnie.</span>
+            <span class="plant-value">
+              Zanurzenie doniczki co 7–10 dni, rano, w wodzie odstałej. Po zanurzeniu dokładnie odcieknięcie.
+            </span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Nawożenie:</span>
-            <span class="plant-value">1×/miesiąc w sezonie.</span>
+            <span class="plant-value">
+              Co 2 tygodnie w sezonie, nawóz do storczyków (np. NPK 3‑6‑6 lub 4‑6‑6), algi 1×/miesiąc.
+            </span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Doniczka / przesadzanie:</span>
-            <span class="plant-value">Ciasna doniczka, co 2–3 lata.</span>
+            <span class="plant-value">
+              Ciasna, przezroczysta doniczka, przesadzanie co 1,5–2 lata po przekwitnięciu, do podłoża dla storczyków.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Typowe problemy:</span>
+            <span class="plant-value">Brak kwitnienia, ciemne liście, gnicie korzeni przy przelaniu.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Wskazówki serwisowe:</span>
+            <span class="plant-value">
+              Zapewnić różnicę temp. dzień/noc, dużo rozproszonego światła, usuwać zgniłe korzenie przy przesadzaniu.
+            </span>
+          </div>
+        </div>
+      </details>
+
+<!-- Dracena – JADL -->
+      <details class="plant-card" data-location="JADL" data-plant-id="jadl-dracena-1">
+        <summary>
+          <div class="plant-main-title">
+            <span class="plant-name">Dracena - piętro, przy balkonie</span>
+            <span class="plant-latin">Dracaena</span>
+          </div>
+          <div class="plant-icons">💧 ⛅ 🧪</div>
+          <span class="plant-chevron"></span>
+        </summary>
+        <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko obecne:</span>
+            <span class="plant-value">Przy oknie balkonowym na PD stronę.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko zalecane:</span>
+            <span class="plant-value">
+              Może zostać, ale w południe lekko osłonić przed ostrym słońcem.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Podlewanie:</span>
+            <span class="plant-value">
+              Co 7–10 dni, rano, wodą odstaną; nie dopuszczać do długotrwałego zalania.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Nawożenie:</span>
+            <span class="plant-value">
+              Co 2 tygodnie III–IX, nawóz do roślin zielonych, mikroelementy przy blaknięciu liści.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Doniczka / przesadzanie:</span>
+            <span class="plant-value">
+              Luźniejsza doniczka, przesadzanie co 2 lata, dobra warstwa drenażu.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Typowe problemy:</span>
+            <span class="plant-value">Brązowe końcówki liści przy suchej atmosferze lub zasoleniu podłoża.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Wskazówki serwisowe:</span>
+            <span class="plant-value">
+              Przecierać liście z kurzu, unikać bardzo twardej, wapiennej wody.
+            </span>
+          </div>
+        </div>
+      </details>
+
+      <!-- Skrzydłokwiat – SYP -->
+      <details class="plant-card" data-location="SYP" data-plant-id="syp-skrzydlokwiat-1">
+        <summary>
+          <div class="plant-main-title">
+            <span class="plant-name">Skrzydłokwiat</span>
+            <span class="plant-latin">Spathiphyllum</span>
+          </div>
+          <div class="plant-icons">💧💧 ☁️ 🧪</div>
+          <span class="plant-chevron"></span>
+        </summary>
+        <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko obecne:</span>
+            <span class="plant-value">Na szafce w sypialni, z dala od okna.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko zalecane:</span>
+            <span class="plant-value">Może zostać, ważna stała wilgotność powietrza.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Podlewanie:</span>
+            <span class="plant-value">
+              Co 5–7 dni, rano, wodą odstaną. Nie dopuszczać do całkowitego przesuszenia.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Nawożenie:</span>
+            <span class="plant-value">
+              Co 2 tygodnie III–IX, nawóz do roślin zielonych, biostymulator (aminokwasy/algi) przy spadku formy.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Doniczka / przesadzanie:</span>
+            <span class="plant-value">
+              Lubi ciasną doniczkę – wtedy lepiej kwitnie. Przesadzać dopiero, gdy korzenie wychodzą górą lub dołem.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Typowe problemy:</span>
+            <span class="plant-value">Brak kwitnienia, zasychanie końcówek liści przy suchej atmosferze.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Wskazówki serwisowe:</span>
+            <span class="plant-value">
+              Zwiększyć wilgotność (keramzyt + woda), nie stawiać przy kaloryferze.
+            </span>
+          </div>
+        </div>
+      </details>
+
+      <!-- Anturium – SYP -->
+      <details class="plant-card" data-location="SYP" data-plant-id="syp-anturium-1">
+        <summary>
+          <div class="plant-main-title">
+            <span class="plant-name">Anturium</span>
+            <span class="plant-latin">Anthurium andraeanum</span>
+          </div>
+          <div class="plant-icons">💧💧 ⛅ 🧪</div>
+          <span class="plant-chevron"></span>
+        </summary>
+        <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko obecne:</span>
+            <span class="plant-value">Na szafce w sypialni, z dala od okna dachowego.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko zalecane:</span>
+            <span class="plant-value">
+              Jasne, rozproszone światło, z dala od przeciągów. Lubi wyższą wilgotność powietrza.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Podlewanie:</span>
+            <span class="plant-value">
+              Co 7–10 dni, rano, wodą odstaną. Podłoże lekko wilgotne, ale nie mokre.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Nawożenie:</span>
+            <span class="plant-value">
+              Co 2 tygodnie III–IX, nawóz do roślin kwitnących (wyższy fosfor), algi morskie jako wsparcie.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Doniczka / przesadzanie:</span>
+            <span class="plant-value">
+              Luźna, przewiewna mieszanka z perlitem/korą, przesadzanie co 1–2 lata.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Typowe problemy:</span>
+            <span class="plant-value">Brak kwitnienia, brązowe końcówki liści przy suchej atmosferze.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Wskazówki serwisowe:</span>
+            <span class="plant-value">
+              Zwiększyć wilgotność powietrza, nie przelewać, nie stawiać przy kaloryferze.
+            </span>
+          </div>
+        </div>
+      </details>
+
+      <!-- Sansewieria 1 – SYP parapet -->
+      <details class="plant-card" data-location="SYP" data-plant-id="syp-sansewieria-1">
+        <summary>
+          <div class="plant-main-title">
+            <span class="plant-name">Wężownica (Sansewieria) - parapet</span>
+            <span class="plant-latin">Dracaena trifasciata</span>
+          </div>
+          <div class="plant-icons">💧 ☁️</div>
+          <span class="plant-chevron"></span>
+        </summary>
+        <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko obecne:</span>
+            <span class="plant-value">Parapet PD w sypialni, dużo światła.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko zalecane:</span>
+            <span class="plant-value">
+              Może rosnąć w jasnym i półcienistym miejscu, ważne unikanie przelania.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Podlewanie:</span>
+            <span class="plant-value">
+              Co 3–4 tygodnie, zimą jeszcze rzadziej. Lepiej przesuszyć niż przelać.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Nawożenie:</span>
+            <span class="plant-value">
+              1×/miesiąc IV–VIII, nawóz do sukulentów lub roślin zielonych w małej dawce, humus 1×/miesiąc.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Doniczka / przesadzanie:</span>
+            <span class="plant-value">
+              Lubi ciasną doniczkę, przesadzanie co 3–4 lata lub gdy doniczka pęka od kłączy.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Typowe problemy:</span>
+            <span class="plant-value">Gnicie przy przelaniu, miękkie liście, plamy.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Wskazówki serwisowe:</span>
+            <span class="plant-value">
+              Idealna roślina „do zapominania”, podlewać rzadko, nie przelewać.
+            </span>
+          </div>
+        </div>
+      </details>
+
+      <!-- Sansewieria 2 – SYP szafka -->
+      <details class="plant-card" data-location="SYP" data-plant-id="syp-sansewieria-2">
+        <summary>
+          <div class="plant-main-title">
+            <span class="plant-name">Wężownica (Sansewieria) – u Filipa</span>
+            <span class="plant-latin">Dracaena trifasciata</span>
+          </div>
+          <div class="plant-icons">💧 ☁️</div>
+          <span class="plant-chevron"></span>
+        </summary>
+        <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko obecne:</span>
+            <span class="plant-value">Na szafce w sypialni, z dala od okna.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko zalecane:</span>
+            <span class="plant-value">
+              Półcień, stanowisko pośrednie, bez bezpośredniego słońca, nadal OK.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Podlewanie:</span>
+            <span class="plant-value">
+              Jak wyżej – bardzo oszczędnie, co kilka tygodni, zimą minimalnie.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Nawożenie:</span>
+            <span class="plant-value">Jak wyżej – delikatnie, 1×/miesiąc w sezonie.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Doniczka / przesadzanie:</span>
+            <span class="plant-value">Ciasna doniczka, przesadzanie co kilka lat.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Typowe problemy:</span>
+            <span class="plant-value">Jak wyżej – głównie przelanie.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Wskazówki serwisowe:</span>
+            <span class="plant-value">Nie przelewać, nie martwić się lekkim przesuszeniem.</span>
           </div>
         </div>
       </details>
     </section>
-      <!-- Pelargonia – SYP -->
-      <details class="plant-card" data-location="SYP" data-plant-id="syp-pelargonia-1">
-        <summary>
-          <div class="plant-main-title">
-            <span class="plant-name">Pelargonia – sypialnia</span>
-            <span class="plant-latin">Pelargonium</span>
-          </div>
-          <div class="plant-icons" aria-hidden="true">💧💧 ☀️ 🧪</div>
-          <span class="plant-chevron"></span>
-        </summary>
 
-        <div class="plant-body">
-          <div class="water-today">
-            <span>
-              <span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>
-              Podlane dziś?
-            </span>
-            <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
-            </label>
-          </div>
-
-          <div class="plant-row">
-            <span class="plant-label">Stanowisko obecne:</span>
-            <span class="plant-value">Sypialnia, jasne stanowisko.</span>
-          </div>
-
-          <div class="plant-row">
-            <span class="plant-label">Stanowisko zalecane:</span>
-            <span class="plant-value">Jak w salonie – dużo słońca i przewiew.</span>
-          </div>
-
-          <div class="plant-row">
-            <span class="plant-label">Podlewanie:</span>
-            <span class="plant-value">Jak w salonie – obficie po przeschnięciu.</span>
-          </div>
-
-          <div class="plant-row">
-            <span class="plant-label">Nawożenie:</span>
-            <span class="plant-value">Jak w salonie – co 7–10 dni w sezonie.</span>
-          </div>
-
-          <div class="plant-row">
-            <span class="plant-label">Doniczka / przesadzanie:</span>
-            <span class="plant-value">Jak w salonie.</span>
-          </div>
-
-          <div class="plant-row">
-            <span class="plant-label">Typowe problemy:</span>
-            <span class="plant-value">Jak w salonie.</span>
-          </div>
-
-          <div class="plant-row">
-            <span class="plant-label">Wskazówki serwisowe:</span>
-            <span class="plant-value">Jak w salonie.</span>
-          </div>
-        </div>
-      </details>
-    </section>
-
-    <!-- ===================== SALON ===================== -->
+    <!-- ===================== Salon ===================== -->
     <section class="location-section" id="loc-SAL">
       <h2 class="location-title">Salon</h2>
 
-      <!-- Epipremnum – SAL -->
-      <details class="plant-card" data-location="SAL" data-plant-id="sal-epipremnum-1">
+      <!-- Żyworódka – SAL -->
+      <details class="plant-card" data-location="SAL" data-plant-id="sal-zyworodka-1">
         <summary>
           <div class="plant-main-title">
-            <span class="plant-name">Epipremnum ‘Marble Queen’</span>
-            <span class="plant-latin">Epipremnum aureum</span>
+            <span class="plant-name">Żyworódka - drobne kwiatki</span>
+            <span class="plant-latin">Kalanchoe</span>
           </div>
-          <div class="plant-icons" aria-hidden="true">💧 ⛅ 🧪</div>
+          <div class="plant-icons">💧 ☀️ 🧪</div>
           <span class="plant-chevron"></span>
         </summary>
-
         <div class="plant-body">
           <div class="water-today">
-            <span>
-              <span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>
-              Podlane dziś?
-            </span>
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
             <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
+              <input type="checkbox" class="water-checkbox" />
             </label>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
-            <span class="plant-value">Salon, jasne stanowisko.</span>
+            <span class="plant-value">Parapet PD‑Zach, dużo światła.</span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Stanowisko zalecane:</span>
-            <span class="plant-value">Jak w kuchni – jasne, rozproszone światło.</span>
+            <span class="plant-value">Może zostać; latem można wystawić na balkon w półcieniu.</span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Podlewanie:</span>
-            <span class="plant-value">Jak w kuchni – co 7–10 dni.</span>
+            <span class="plant-value">
+              Zimą co 10–14 dni, latem co 7–10 dni, rano, wodą odstaną.
+            </span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Nawożenie:</span>
-            <span class="plant-value">Jak w kuchni.</span>
+            <span class="plant-value">
+              1×/miesiąc IV–VIII, nawóz do roślin kwitnących lub sukulentów, algi 1×/miesiąc.
+            </span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Doniczka / przesadzanie:</span>
-            <span class="plant-value">Jak w kuchni.</span>
+            <span class="plant-value">Średnio ciasna doniczka, przesadzanie co 1–2 lata.</span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Typowe problemy:</span>
-            <span class="plant-value">Jak w kuchni.</span>
+            <span class="plant-value">Etiolacja zimą, długie pędy, gubienie dolnych liści.</span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Wskazówki serwisowe:</span>
-            <span class="plant-value">Jak w kuchni.</span>
+            <span class="plant-value">Przyciąć wiosną, ukorzenić wierzchołki, nie przelewać.</span>
+          </div>
+        </div>
+      </details>
+
+      <!-- Haworsja – SAL -->
+      <details class="plant-card" data-location="SAL" data-plant-id="sal-haworsja-1">
+        <summary>
+          <div class="plant-main-title">
+            <span class="plant-name">Haworsja pasiasta i zwyczajna - w małych doniczkach</span>
+            <span class="plant-latin">Haworthia fasciata</span>
+          </div>
+          <div class="plant-icons">💧 ☀️</div>
+          <span class="plant-chevron"></span>
+        </summary>
+        <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko:</span>
+            <span class="plant-value">
+              Jasne, rozproszone światło; może stać na parapecie, ale nie w palącym słońcu.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Podlewanie:</span>
+            <span class="plant-value">
+              Co 2–3 tygodnie, rano, wodą odstaną; zimą jeszcze rzadziej.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Nawożenie:</span>
+            <span class="plant-value">1×/miesiąc w sezonie, nawóz do kaktusów.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Doniczka / przesadzanie:</span>
+            <span class="plant-value">
+              Lubi ciasną doniczkę, rośnie w kępach, przesadzanie co 2–3 lata.
+            </span>
+          </div>
+        </div>
+      </details>
+
+      <!-- Mini kaktusy – SAL -->
+      <details class="plant-card" data-location="SAL" data-plant-id="sal-mini-kaktusy-1">
+        <summary>
+          <div class="plant-main-title">
+            <span class="plant-name">Mini kaktusy</span>
+            <span class="plant-latin">Cactaceae</span>
+          </div>
+          <div class="plant-icons">💧 ☀️</div>
+          <span class="plant-chevron"></span>
+        </summary>
+        <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko:</span>
+            <span class="plant-value">
+              Bardzo jasne, słoneczne miejsce, najlepiej parapet PD lub PD‑Zach.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Podlewanie:</span>
+            <span class="plant-value">
+              Co 3–4 tygodnie, rano, wodą odstaną; zimą prawie wcale.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Nawożenie:</span>
+            <span class="plant-value">1×/miesiąc w sezonie, nawóz do kaktusów.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Doniczka / przesadzanie:</span>
+            <span class="plant-value">Ciasna doniczka, przesadzanie co 2–3 lata.</span>
+          </div>
+        </div>
+      </details>
+
+      <!-- Aloes – SAL -->
+      <details class="plant-card" data-location="SAL" data-plant-id="sal-aloes-1">
+        <summary>
+          <div class="plant-main-title">
+            <span class="plant-name">Aloes drzewiasty</span>
+            <span class="plant-latin">Aloe arborescens</span>
+          </div>
+          <div class="plant-icons">💧 ☀️</div>
+          <span class="plant-chevron"></span>
+        </summary>
+        <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko:</span>
+            <span class="plant-value">
+              Jasne, słoneczne miejsce, może stać na PD‑Zach parapecie.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Podlewanie:</span>
+            <span class="plant-value">
+              Co 2–3 tygodnie, rano, wodą odstaną; zimą rzadziej.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Nawożenie:</span>
+            <span class="plant-value">1×/miesiąc w sezonie, nawóz do sukulentów.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Doniczka / przesadzanie:</span>
+            <span class="plant-value">
+              Lubi luźniejszą doniczkę, szybko rośnie, przesadzanie co 1–2 lata.
+            </span>
+          </div>
+        </div>
+      </details>
+
+      <!-- Grudnik – SAL -->
+      <details class="plant-card" data-location="SAL" data-plant-id="sal-grudnik-1">
+        <summary>
+          <div class="plant-main-title">
+            <span class="plant-name">Grudnik (żółty i różowy)</span>
+            <span class="plant-latin">Schlumbergera truncata</span>
+          </div>
+          <div class="plant-icons">💧 ☀️ 🧪</div>
+          <span class="plant-chevron"></span>
+        </summary>
+        <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko obecne:</span>
+            <span class="plant-value">Parapet PD i PD‑Zach, jasne stanowisko.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko zalecane:</span>
+            <span class="plant-value">
+              Może zostać; lubi jasne, ale nie palące słońce. Po kwitnieniu okres spoczynku.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Podlewanie:</span>
+            <span class="plant-value">
+              Po przeschnięciu wierzchniej warstwy ziemi, rano, wodą odstaną; w spoczynku rzadziej.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Nawożenie:</span>
+            <span class="plant-value">
+              Co 2 tygodnie w sezonie wzrostu, nawóz do kaktusów lub roślin kwitnących, algi 1×/miesiąc.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Doniczka / przesadzanie:</span>
+            <span class="plant-value">
+              Ciasna doniczka, przesadzanie co 3–4 lata lub gdy korzenie wypełnią doniczkę.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Typowe problemy:</span>
+            <span class="plant-value">Zrzucanie pąków przy zmianie miejsca, przelaniu lub przeciągach.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Wskazówki serwisowe:</span>
+            <span class="plant-value">
+              Nie przestawiać w czasie zawiązywania pąków, podlewać równomiernie, unikać szoków temperaturowych.
+            </span>
           </div>
         </div>
       </details>
@@ -287,55 +1077,51 @@
             <span class="plant-name">Pelargonia (geranium)</span>
             <span class="plant-latin">Pelargonium</span>
           </div>
-          <div class="plant-icons" aria-hidden="true">💧💧 ☀️ 🧪</div>
+          <div class="plant-icons">💧💧 ☀️ 🧪</div>
           <span class="plant-chevron"></span>
         </summary>
-
         <div class="plant-body">
           <div class="water-today">
-            <span>
-              <span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>
-              Podlane dziś?
-            </span>
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
             <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
+              <input type="checkbox" class="water-checkbox" />
             </label>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Parapet PD i PD‑Zach, bardzo jasno.</span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Stanowisko zalecane:</span>
             <span class="plant-value">Idealne – pelargonie kochają słońce i przewiew.</span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Podlewanie:</span>
-            <span class="plant-value">Obficie po przeschnięciu wierzchniej warstwy ziemi.</span>
+            <span class="plant-value">
+              Obficie po przeschnięciu wierzchniej warstwy ziemi, rano, wodą odstaną.
+            </span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Nawożenie:</span>
-            <span class="plant-value">Co 7–10 dni III–IX, nawóz do pelargonii.</span>
+            <span class="plant-value">
+              Co 7–10 dni III–IX, nawóz do pelargonii / roślin balkonowych (wysoki potas), mikroelementy przy słabym wzroście.
+            </span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Doniczka / przesadzanie:</span>
-            <span class="plant-value">Średnio luźna doniczka, przesadzanie co sezon.</span>
+            <span class="plant-value">
+              Średnio luźna doniczka, przesadzanie co sezon lub odnawianie przez sadzonki.
+            </span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Typowe problemy:</span>
             <span class="plant-value">Zasychanie kwiatów, żółknięcie liści przy przelaniu.</span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Wskazówki serwisowe:</span>
-            <span class="plant-value">Usuwać przekwitłe kwiaty, zapewnić dużo światła.</span>
+            <span class="plant-value">
+              Regularnie usuwać przekwitłe kwiaty, zapewnić dużo światła i przewiew.
+            </span>
           </div>
         </div>
       </details>
@@ -347,60 +1133,59 @@
             <span class="plant-name">Fikus benjamina (mały)</span>
             <span class="plant-latin">Ficus benjamina</span>
           </div>
-          <div class="plant-icons" aria-hidden="true">💧 ⛅ 🧪</div>
+          <div class="plant-icons">💧 ⛅ 🧪</div>
           <span class="plant-chevron"></span>
         </summary>
-
         <div class="plant-body">
           <div class="water-today">
-            <span>
-              <span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>
-              Podlane dziś?
-            </span>
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
             <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
+              <input type="checkbox" class="water-checkbox" />
             </label>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Stanowisko obecne:</span>
             <span class="plant-value">Parapet zachodni, jasne stanowisko.</span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Stanowisko zalecane:</span>
-            <span class="plant-value">Nie lubi przestawiania ani przeciągów.</span>
+            <span class="plant-value">
+              Może zostać; nie lubi częstego przestawiania ani przeciągów.
+            </span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Podlewanie:</span>
-            <span class="plant-value">Co 7–10 dni, zimą rzadziej.</span>
+            <span class="plant-value">
+              Co 7–10 dni, rano, wodą odstaną; zimą rzadziej.
+            </span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Nawożenie:</span>
-            <span class="plant-value">Co 2 tygodnie III–IX.</span>
+            <span class="plant-value">
+              Co 2 tygodnie III–IX, nawóz do roślin zielonych, algi morskie dla odporności.
+            </span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Doniczka / przesadzanie:</span>
-            <span class="plant-value">Co 2 lata lub dosypywanie ziemi.</span>
+            <span class="plant-value">
+              Średnio luźna doniczka, przesadzanie co 2 lata lub dosypywanie świeżej ziemi od góry.
+            </span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Typowe problemy:</span>
-            <span class="plant-value">Zrzucanie liści przy zmianie miejsca.</span>
+            <span class="plant-value">Zrzucanie liści przy zmianie miejsca, przeciągach lub przelaniu.</span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Wskazówki serwisowe:</span>
-            <span class="plant-value">Ustawić w jednym miejscu, podlewać równomiernie.</span>
+            <span class="plant-value">
+              Ustawić w jednym miejscu i nie przestawiać, podlewać równomiernie, unikać skrajności.
+            </span>
           </div>
         </div>
       </details>
     </section>
-    <!-- ===================== KUCHNIA ===================== -->
+
+    <!-- ===================== Kuchnia ===================== -->
     <section class="location-section" id="loc-KUCH">
       <h2 class="location-title">Kuchnia</h2>
 
@@ -411,453 +1196,406 @@
             <span class="plant-name">Epipremnum ‘Marble Queen’ 1</span>
             <span class="plant-latin">Epipremnum aureum</span>
           </div>
-          <div class="plant-icons" aria-hidden="true">💧 ⛅ 🧪</div>
+          <div class="plant-icons">💧 ⛅ 🧪</div>
           <span class="plant-chevron"></span>
         </summary>
         <div class="plant-body">
           <div class="water-today">
             <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
             <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
+              <input type="checkbox" class="water-checkbox" />
             </label>
           </div>
-          <div class="plant-row"><span class="plant-label">Stanowisko obecne:</span><span class="plant-value">Na szafkach w kuchni, jasne stanowisko.</span></div>
-          <div class="plant-row"><span class="plant-label">Stanowisko zalecane:</span><span class="plant-value">Może zostać; jeśli liście zielenieją, przenieść bliżej okna.</span></div>
-          <div class="plant-row"><span class="plant-label">Podlewanie:</span><span class="plant-value">Co 7–10 dni.</span></div>
-          <div class="plant-row"><span class="plant-label">Nawożenie:</span><span class="plant-value">Co 2 tygodnie III–IX.</span></div>
-          <div class="plant-row"><span class="plant-label">Doniczka / przesadzanie:</span><span class="plant-value">Co 1–2 lata.</span></div>
-          <div class="plant-row"><span class="plant-label">Typowe problemy:</span><span class="plant-value">Zielenienie liści przy małej ilości światła.</span></div>
-          <div class="plant-row"><span class="plant-label">Wskazówki serwisowe:</span><span class="plant-value">Przycinać wierzchołki dla zagęszczenia.</span></div>
-        </div>
-      </details>
-
-      <!-- Epipremnum 2 – KUCH -->
-      <details class="plant-card" data-location="KUCH" data-plant-id="kuch-epipremnum-2">
-        <summary>
-          <div class="plant-main-title">
-            <span class="plant-name">Epipremnum ‘Marble Queen’ 2</span>
-            <span class="plant-latin">Epipremnum aureum</span>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko obecne:</span>
+            <span class="plant-value">Na szafkach w kuchni, jasne stanowisko.</span>
           </div>
-          <div class="plant-icons" aria-hidden="true">💧 ⛅ 🧪</div>
-          <span class="plant-chevron"></span>
-        </summary>
-        <div class="plant-body">
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
-            </label>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko zalecane:</span>
+            <span class="plant-value">
+              Może zostać; jeśli liście zielenieją, przenieść bliżej okna (więcej światła).
+            </span>
           </div>
-          <div class="plant-row"><span class="plant-label">Stanowisko obecne:</span><span class="plant-value">Na szafkach w kuchni, bliżej okna.</span></div>
-          <div class="plant-row"><span class="plant-label">Stanowisko zalecane:</span><span class="plant-value">Jak wyżej.</span></div>
-          <div class="plant-row"><span class="plant-label">Podlewanie:</span><span class="plant-value">Jak wyżej.</span></div>
-          <div class="plant-row"><span class="plant-label">Nawożenie:</span><span class="plant-value">Jak wyżej.</span></div>
-          <div class="plant-row"><span class="plant-label">Doniczka / przesadzanie:</span><span class="plant-value">Jak wyżej.</span></div>
-          <div class="plant-row"><span class="plant-label">Typowe problemy:</span><span class="plant-value">Jak wyżej.</span></div>
-          <div class="plant-row"><span class="plant-label">Wskazówki serwisowe:</span><span class="plant-value">Jak wyżej.</span></div>
-        </div>
-      </details>
-
-      <!-- Cissus 1 – KUCH -->
-      <details class="plant-card" data-location="KUCH" data-plant-id="kuch-cissus-1">
-        <summary>
-          <div class="plant-main-title">
-            <span class="plant-name">Winorośl pokojowa 1</span>
-            <span class="plant-latin">Cissus rhombifolia 'Ellen Danica'</span>
+          <div class="plant-row">
+            <span class="plant-label">Podlewanie:</span>
+            <span class="plant-value">
+              Co 7–10 dni, rano, wodą odstaną; podłoże lekko przesycha między podlewaniami.
+            </span>
           </div>
-          <div class="plant-icons" aria-hidden="true">💧 ⛅ 🧪</div>
-          <span class="plant-chevron"></span>
-        </summary>
-        <div class="plant-body">
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
-            </label>
+          <div class="plant-row">
+            <span class="plant-label">Nawożenie:</span>
+            <span class="plant-value">
+              Co 2 tygodnie III–IX, nawóz do roślin zielonych, algi morskie dla wybarwienia.
+            </span>
           </div>
-          <div class="plant-row"><span class="plant-label">Stanowisko obecne:</span><span class="plant-value">Parapet PN‑Wsch, chłodniejsze miejsce.</span></div>
-          <div class="plant-row"><span class="plant-label">Stanowisko zalecane:</span><span class="plant-value">Z dala od kaloryferów.</span></div>
-          <div class="plant-row"><span class="plant-label">Podlewanie:</span><span class="plant-value">Co 5–7 dni.</span></div>
-          <div class="plant-row"><span class="plant-label">Nawożenie:</span><span class="plant-value">Co 2 tygodnie III–IX.</span></div>
-          <div class="plant-row"><span class="plant-label">Doniczka / przesadzanie:</span><span class="plant-value">Co 1–2 lata.</span></div>
-          <div class="plant-row"><span class="plant-label">Typowe problemy:</span><span class="plant-value">Brązowe końcówki liści.</span></div>
-          <div class="plant-row"><span class="plant-label">Wskazówki serwisowe:</span><span class="plant-value">Unikać gorącego powietrza.</span></div>
-        </div>
-      </details>
-
-      <!-- Cissus 2 – KUCH -->
-      <details class="plant-card" data-location="KUCH" data-plant-id="kuch-cissus-2">
-        <summary>
-          <div class="plant-main-title">
-            <span class="plant-name">Winorośl pokojowa 2</span>
-            <span class="plant-latin">Cissus rhombifolia 'Ellen Danica'</span>
+          <div class="plant-row">
+            <span class="plant-label">Doniczka / przesadzanie:</span>
+            <span class="plant-value">
+              Średnio luźna doniczka, przesadzanie co 1–2 lata, można odmładzać przez sadzonki pędowe.
+            </span>
           </div>
-          <div class="plant-icons" aria-hidden="true">💧 ⛅ 🧪</div>
-          <span class="plant-chevron"></span>
-        </summary>
-        <div class="plant-body">
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
-            </label>
-          </div>
-          <div class="plant-row"><span class="plant-label">Stanowisko obecne:</span><span class="plant-value">Parapet w kuchni.</span></div>
-          <div class="plant-row"><span class="plant-label">Stanowisko zalecane:</span><span class="plant-value">Jak wyżej.</span></div>
-          <div class="plant-row"><span class="plant-label">Podlewanie:</span><span class="plant-value">Jak wyżej.</span></div>
-          <div class="plant-row"><span class="plant-label">Nawożenie:</span><span class="plant-value">Jak wyżej.</span></div>
-          <div class="plant-row"><span class="plant-label">Doniczka / przesadzanie:</span><span class="plant-value">Jak wyżej.</span></div>
-          <div class="plant-row"><span class="plant-label">Typowe problemy:</span><span class="plant-value">Jak wyżej.</span></div>
-          <div class="plant-row"><span class="plant-label">Wskazówki serwisowe:</span><span class="plant-value">Jak wyżej.</span></div>
-        </div>
-      </details>
-    </section>
-
-    <!-- ===================== JADALNIA ===================== -->
-    <section class="location-section" id="loc-JADL">
-      <h2 class="location-title">Jadalnia</h2>
-
-      <!-- Grubosz – JADL -->
-      <details class="plant-card" data-location="JADL" data-plant-id="jadl-grubosz-1">
-        <summary>
-          <div class="plant-main-title">
-            <span class="plant-name">Grubosz – na stołku</span>
-            <span class="plant-latin">Crassula ovata</span>
-          </div>
-          <div class="plant-icons" aria-hidden="true">💧 ☀️ 🧪</div>
-          <span class="plant-chevron"></span>
-        </summary>
-        <div class="plant-body">
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
-            </label>
-          </div>
-          <div class="plant-row"><span class="plant-label">Stanowisko obecne:</span><span class="plant-value">Jadalnia, ok. 3 m od okna.</span></div>
-          <div class="plant-row"><span class="plant-label">Stanowisko zalecane:</span><span class="plant-value">Może zostać, ważne dobre światło.</span></div>
-          <div class="plant-row"><span class="plant-label">Podlewanie:</span><span class="plant-value">Co 2–3 tygodnie.</span></div>
-          <div class="plant-row"><span class="plant-label">Nawożenie:</span><span class="plant-value">1×/miesiąc.</span></div>
-          <div class="plant-row"><span class="plant-label">Doniczka / przesadzanie:</span><span class="plant-value">Co 2–3 lata.</span></div>
-          <div class="plant-row"><span class="plant-label">Typowe problemy:</span><span class="plant-value">Jak w sypialni.</span></div>
-          <div class="plant-row"><span class="plant-label">Wskazówki serwisowe:</span><span class="plant-value">Jak w sypialni.</span></div>
-        </div>
-      </details>
-
-      <!-- Haworsja – JADL -->
-      <details class="plant-card" data-location="JADL" data-plant-id="jadl-haworsja-1">
-        <summary>
-          <div class="plant-main-title">
-            <span class="plant-name">Haworsja pasiasta – małe doniczki</span>
-            <span class="plant-latin">Haworthia fasciata</span>
-          </div>
-          <div class="plant-icons" aria-hidden="true">💧 ☀️</div>
-          <span class="plant-chevron"></span>
-        </summary>
-        <div class="plant-body">
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
-            </label>
-          </div>
-          <div class="plant-row"><span class="plant-label">Stanowisko:</span><span class="plant-value">Jasne, rozproszone światło.</span></div>
-          <div class="plant-row"><span class="plant-label">Podlewanie:</span><span class="plant-value">Co 2–3 tygodnie.</span></div>
-          <div class="plant-row"><span class="plant-label">Nawożenie:</span><span class="plant-value">1×/miesiąc.</span></div>
-          <div class="plant-row"><span class="plant-label">Doniczka / przesadzanie:</span><span class="plant-value">Co 2–3 lata.</span></div>
-        </div>
-      </details>
-
-      <!-- Pelargonia – JADL -->
-      <details class="plant-card" data-location="JADL" data-plant-id="jadl-pelargonia-1">
-        <summary>
-          <div class="plant-main-title">
-            <span class="plant-name">Pelargonia – jadalnia</span>
-            <span class="plant-latin">Pelargonium</span>
-          </div>
-          <div class="plant-icons" aria-hidden="true">💧💧 ☀️ 🧪</div>
-          <span class="plant-chevron"></span>
-        </summary>
-        <div class="plant-body">
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
-            </label>
-          </div>
-          <div class="plant-row"><span class="plant-label">Stanowisko obecne:</span><span class="plant-value">Jadalnia, bardzo jasno.</span></div>
-          <div class="plant-row"><span class="plant-label">Stanowisko zalecane:</span><span class="plant-value">Jak w salonie.</span></div>
-          <div class="plant-row"><span class="plant-label">Podlewanie:</span><span class="plant-value">Jak w salonie.</span></div>
-          <div class="plant-row"><span class="plant-label">Nawożenie:</span><span class="plant-value">Jak w salonie.</span></div>
-          <div class="plant-row"><span class="plant-label">Doniczka / przesadzanie:</span><span class="plant-value">Jak w salonie.</span></div>
-          <div class="plant-row"><span class="plant-label">Typowe problemy:</span><span class="plant-value">Jak w salonie.</span></div>
-          <div class="plant-row"><span class="plant-label">Wskazówki serwisowe:</span><span class="plant-value">Jak w salonie.</span></div>
-        </div>
-      </details>
-
-      <!-- Wawrzyn – JADL -->
-      <details class="plant-card" data-location="JADL" data-plant-id="jadl-wawrzyn-1">
-        <summary>
-          <div class="plant-main-title">
-            <span class="plant-name">Wawrzyn szlachetny</span>
-            <span class="plant-latin">Laurus nobilis</span>
-          </div>
-          <div class="plant-icons" aria-hidden="true">💧 ⛅ 🧪</div>
-          <span class="plant-chevron"></span>
-        </summary>
-        <div class="plant-body">
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
-            </label>
-          </div>
-          <div class="plant-row"><span class="plant-label">Stanowisko obecne:</span><span class="plant-value">Przy oknie balkonowym.</span></div>
-          <div class="plant-row"><span class="plant-label">Stanowisko zalecane:</span><span class="plant-value">Może zostać; lubi słońce i przewiew.</span></div>
-          <div class="plant-row"><span class="plant-label">Podlewanie:</span><span class="plant-value">Co 7–10 dni.</span></div>
-          <div class="plant-row"><span class="plant-label">Nawożenie:</span><span class="plant-value">Co 2 tygodnie III–IX.</span></div>
-              <!-- ===================== KUCHNIA ===================== -->
-    <section class="location-section" id="loc-KUCH">
-      <h2 class="location-title">Kuchnia</h2>
-
-      <!-- Epipremnum 1 – KUCH -->
-      <details class="plant-card" data-location="KUCH" data-plant-id="kuch-epipremnum-1">
-        <summary>
-          <div class="plant-main-title">
-            <span class="plant-name">Epipremnum ‘Marble Queen’ 1</span>
-            <span class="plant-latin">Epipremnum aureum</span>
-          </div>
-          <div class="plant-icons" aria-hidden="true">💧 ⛅ 🧪</div>
-          <span class="plant-chevron"></span>
-        </summary>
-        <div class="plant-body">
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
-            </label>
-          </div>
-          <div class="plant-row"><span class="plant-label">Stanowisko obecne:</span><span class="plant-value">Na szafkach w kuchni, jasne stanowisko.</span></div>
-          <div class="plant-row"><span class="plant-label">Stanowisko zalecane:</span><span class="plant-value">Może zostać; jeśli liście zielenieją, przenieść bliżej okna.</span></div>
-          <div class="plant-row"><span class="plant-label">Podlewanie:</span><span class="plant-value">Co 7–10 dni.</span></div>
-          <div class="plant-row"><span class="plant-label">Nawożenie:</span><span class="plant-value">Co 2 tygodnie III–IX.</span></div>
-          <div class="plant-row"><span class="plant-label">Doniczka / przesadzanie:</span><span class="plant-value">Co 1–2 lata.</span></div>
-          <div class="plant-row"><span class="plant-label">Typowe problemy:</span><span class="plant-value">Zielenienie liści przy małej ilości światła.</span></div>
-          <div class="plant-row"><span class="plant-label">Wskazówki serwisowe:</span><span class="plant-value">Przycinać wierzchołki dla zagęszczenia.</span></div>
-        </div>
-      </details>
-
-      <!-- Epipremnum 2 – KUCH -->
-      <details class="plant-card" data-location="KUCH" data-plant-id="kuch-epipremnum-2">
-        <summary>
-          <div class="plant-main-title">
-            <span class="plant-name">Epipremnum ‘Marble Queen’ 2</span>
-            <span class="plant-latin">Epipremnum aureum</span>
-          </div>
-          <div class="plant-icons" aria-hidden="true">💧 ⛅ 🧪</div>
-          <span class="plant-chevron"></span>
-        </summary>
-        <div class="plant-body">
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
-            </label>
-          </div>
-          <div class="plant-row"><span class="plant-label">Stanowisko obecne:</span><span class="plant-value">Na szafkach w kuchni, bliżej okna.</span></div>
-          <div class="plant-row"><span class="plant-label">Stanowisko zalecane:</span><span class="plant-value">Jak wyżej.</span></div>
-          <div class="plant-row"><span class="plant-label">Podlewanie:</span><span class="plant-value">Jak wyżej.</span></div>
-          <div class="plant-row"><span class="plant-label">Nawożenie:</span><span class="plant-value">Jak wyżej.</span></div>
-          <div class="plant-row"><span class="plant-label">Doniczka / przesadzanie:</span><span class="plant-value">Jak wyżej.</span></div>
-          <div class="plant-row"><span class="plant-label">Typowe problemy:</span><span class="plant-value">Jak wyżej.</span></div>
-          <div class="plant-row"><span class="plant-label">Wskazówki serwisowe:</span><span class="plant-value">Jak wyżej.</span></div>
-        </div>
-      </details>
-
-      <!-- Cissus 1 – KUCH -->
-      <details class="plant-card" data-location="KUCH" data-plant-id="kuch-cissus-1">
-        <summary>
-          <div class="plant-main-title">
-            <span class="plant-name">Winorośl pokojowa 1</span>
-            <span class="plant-latin">Cissus rhombifolia 'Ellen Danica'</span>
-          </div>
-          <div class="plant-icons" aria-hidden="true">💧 ⛅ 🧪</div>
-          <span class="plant-chevron"></span>
-        </summary>
-        <div class="plant-body">
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
-            </label>
-          </div>
-          <div class="plant-row"><span class="plant-label">Stanowisko obecne:</span><span class="plant-value">Parapet PN‑Wsch, chłodniejsze miejsce.</span></div>
-          <div class="plant-row"><span class="plant-label">Stanowisko zalecane:</span><span class="plant-value">Z dala od kaloryferów.</span></div>
-          <div class="plant-row"><span class="plant-label">Podlewanie:</span><span class="plant-value">Co 5–7 dni.</span></div>
-          <div class="plant-row"><span class="plant-label">Nawożenie:</span><span class="plant-value">Co 2 tygodnie III–IX.</span></div>
-          <div class="plant-row"><span class="plant-label">Doniczka / przesadzanie:</span><span class="plant-value">Co 1–2 lata.</span></div>
-          <div class="plant-row"><span class="plant-label">Typowe problemy:</span><span class="plant-value">Brązowe końcówki liści.</span></div>
-          <div class="plant-row"><span class="plant-label">Wskazówki serwisowe:</span><span class="plant-value">Unikać gorącego powietrza.</span></div>
-        </div>
-      </details>
-
-      <!-- Cissus 2 – KUCH -->
-      <details class="plant-card" data-location="KUCH" data-plant-id="kuch-cissus-2">
-        <summary>
-          <div class="plant-main-title">
-            <span class="plant-name">Winorośl pokojowa 2</span>
-            <span class="plant-latin">Cissus rhombifolia 'Ellen Danica'</span>
-          </div>
-          <div class="plant-icons" aria-hidden="true">💧 ⛅ 🧪</div>
-          <span class="plant-chevron"></span>
-        </summary>
-        <div class="plant-body">
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
-            </label>
-          </div>
-          <div class="plant-row"><span class="plant-label">Stanowisko obecne:</span><span class="plant-value">Parapet w kuchni.</span></div>
-          <div class="plant-row"><span class="plant-label">Stanowisko zalecane:</span><span class="plant-value">Jak wyżej.</span></div>
-          <div class="plant-row"><span class="plant-label">Podlewanie:</span><span class="plant-value">Jak wyżej.</span></div>
-          <div class="plant-row"><span class="plant-label">Nawożenie:</span><span class="plant-value">Jak wyżej.</span></div>
-          <div class="plant-row"><span class="plant-label">Doniczka / przesadzanie:</span><span class="plant-value">Jak wyżej.</span></div>
-          <div class="plant-row"><span class="plant-label">Typowe problemy:</span><span class="plant-value">Jak wyżej.</span></div>
-          <div class="plant-row"><span class="plant-label">Wskazówki serwisowe:</span><span class="plant-value">Jak wyżej.</span></div>
-        </div>
-      </details>
-    </section>
-
-    <!-- ===================== JADALNIA ===================== -->
-    <section class="location-section" id="loc-JADL">
-      <h2 class="location-title">Jadalnia</h2>
-
-      <!-- Grubosz – JADL -->
-      <details class="plant-card" data-location="JADL" data-plant-id="jadl-grubosz-1">
-        <summary>
-          <div class="plant-main-title">
-            <span class="plant-name">Grubosz – na stołku</span>
-            <span class="plant-latin">Crassula ovata</span>
-          </div>
-          <div class="plant-icons" aria-hidden="true">💧 ☀️ 🧪</div>
-          <span class="plant-chevron"></span>
-        </summary>
-        <div class="plant-body">
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
-            </label>
-          </div>
-          <div class="plant-row"><span class="plant-label">Stanowisko obecne:</span><span class="plant-value">Jadalnia, ok. 3 m od okna.</span></div>
-          <div class="plant-row"><span class="plant-label">Stanowisko zalecane:</span><span class="plant-value">Może zostać, ważne dobre światło.</span></div>
-          <div class="plant-row"><span class="plant-label">Podlewanie:</span><span class="plant-value">Co 2–3 tygodnie.</span></div>
-          <div class="plant-row"><span class="plant-label">Nawożenie:</span><span class="plant-value">1×/miesiąc.</span></div>
-          <div class="plant-row"><span class="plant-label">Doniczka / przesadzanie:</span><span class="plant-value">Co 2–3 lata.</span></div>
-          <div class="plant-row"><span class="plant-label">Typowe problemy:</span><span class="plant-value">Jak w sypialni.</span></div>
-          <div class="plant-row"><span class="plant-label">Wskazówki serwisowe:</span><span class="plant-value">Jak w sypialni.</span></div>
-        </div>
-      </details>
-
-      <!-- Haworsja – JADL -->
-      <details class="plant-card" data-location="JADL" data-plant-id="jadl-haworsja-1">
-        <summary>
-          <div class="plant-main-title">
-            <span class="plant-name">Haworsja pasiasta – małe doniczki</span>
-            <span class="plant-latin">Haworthia fasciata</span>
-          </div>
-          <div class="plant-icons" aria-hidden="true">💧 ☀️</div>
-          <span class="plant-chevron"></span>
-        </summary>
-        <div class="plant-body">
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
-            </label>
-          </div>
-          <div class="plant-row"><span class="plant-label">Stanowisko:</span><span class="plant-value">Jasne, rozproszone światło.</span></div>
-          <div class="plant-row"><span class="plant-label">Podlewanie:</span><span class="plant-value">Co 2–3 tygodnie.</span></div>
-          <div class="plant-row"><span class="plant-label">Nawożenie:</span><span class="plant-value">1×/miesiąc.</span></div>
-          <div class="plant-row"><span class="plant-label">Doniczka / przesadzanie:</span><span class="plant-value">Co 2–3 lata.</span></div>
-        </div>
-      </details>
-
-      <!-- Pelargonia – JADL -->
-      <details class="plant-card" data-location="JADL" data-plant-id="jadl-pelargonia-1">
-        <summary>
-          <div class="plant-main-title">
-            <span class="plant-name">Pelargonia – jadalnia</span>
-            <span class="plant-latin">Pelargonium</span>
-          </div>
-          <div class="plant-icons" aria-hidden="true">💧💧 ☀️ 🧪</div>
-          <span class="plant-chevron"></span>
-        </summary>
-        <div class="plant-body">
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
-            </label>
-          </div>
-          <div class="plant-row"><span class="plant-label">Stanowisko obecne:</span><span class="plant-value">Jadalnia, bardzo jasno.</span></div>
-          <div class="plant-row"><span class="plant-label">Stanowisko zalecane:</span><span class="plant-value">Jak w salonie.</span></div>
-          <div class="plant-row"><span class="plant-label">Podlewanie:</span><span class="plant-value">Jak w salonie.</span></div>
-          <div class="plant-row"><span class="plant-label">Nawożenie:</span><span class="plant-value">Jak w salonie.</span></div>
-          <div class="plant-row"><span class="plant-label">Doniczka / przesadzanie:</span><span class="plant-value">Jak w salonie.</span></div>
-          <div class="plant-row"><span class="plant-label">Typowe problemy:</span><span class="plant-value">Jak w salonie.</span></div>
-          <div class="plant-row"><span class="plant-label">Wskazówki serwisowe:</span><span class="plant-value">Jak w salonie.</span></div>
-        </div>
-      </details>
-
-      <!-- Wawrzyn – JADL -->
-      <details class="plant-card" data-location="JADL" data-plant-id="jadl-wawrzyn-1">
-        <summary>
-          <div class="plant-main-title">
-            <span class="plant-name">Wawrzyn szlachetny</span>
-            <span class="plant-latin">Laurus nobilis</span>
-          </div>
-          <div class="plant-icons" aria-hidden="true">💧 ⛅ 🧪</div>
-          <span class="plant-chevron"></span>
-        </summary>
-        <div class="plant-body">
-          <div class="water-today">
-            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
-            <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
-            </label>
-          </div>
-          <div class="plant-row"><span class="plant-label">Stanowisko obecne:</span><span class="plant-value">Przy oknie balkonowym.</span></div>
-          <div class="plant-row"><span class="plant-label">Stanowisko zalecane:</span><span class="plant-value">Może zostać; lubi słońce i przewiew.</span></div>
-          <div class="plant-row"><span class="plant-label">Podlewanie:</span><span class="plant-value">Co 7–10 dni.</span></div>
-          <div class="plant-row"><span class="plant-label">Nawożenie:</span><span class="plant-value">Co 2 tygodnie III–IX.</span></div>
-          <div class="plant-row"><span class="plant-label">Doniczka / przesadzanie:</span><span class="plant-value">Co 1–2 lata.</span></div>
-          <div class="plant-row"><span class="plant-label">
           <div class="plant-row">
             <span class="plant-label">Typowe problemy:</span>
-            <span class="plant-value">Zasychanie końcówek liści przy suchym powietrzu.</span>
+            <span class="plant-value">Zielenienie liści przy małej ilości światła, zasychanie końcówek przy suchym powietrzu.</span>
           </div>
-
           <div class="plant-row">
             <span class="plant-label">Wskazówki serwisowe:</span>
-            <span class="plant-value">Utrzymywać umiarkowaną wilgotność, zapewnić przewiew.</span>
+            <span class="plant-value">
+              Przycinać wierzchołki dla zagęszczenia, ukorzeniać w wodzie, lubi wilgotne powietrze.
+            </span>
+          </div>
+        </div>
+      </details>
+
+      <!-- Epipremnum 2 – KUCH -->
+      <details class="plant-card" data-location="KUCH" data-plant-id="kuch-epipremnum-2">
+        <summary>
+          <div class="plant-main-title">
+            <span class="plant-name">Epipremnum ‘Marble Queen’ 2</span>
+            <span class="plant-latin">Epipremnum aureum</span>
+          </div>
+          <div class="plant-icons">💧 ⛅ 🧪</div>
+          <span class="plant-chevron"></span>
+        </summary>
+        <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko obecne:</span>
+            <span class="plant-value">Na szafkach w kuchni, bliżej okna.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko zalecane:</span>
+            <span class="plant-value">Jak wyżej – jasne, rozproszone światło.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Podlewanie:</span>
+            <span class="plant-value">Jak wyżej – co 7–10 dni, lekkie przesychanie.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Nawożenie:</span>
+            <span class="plant-value">Jak wyżej – co 2 tygodnie w sezonie.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Doniczka / przesadzanie:</span>
+            <span class="plant-value">Jak wyżej.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Typowe problemy:</span>
+            <span class="plant-value">Jak wyżej.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Wskazówki serwisowe:</span>
+            <span class="plant-value">Jak wyżej.</span>
+          </div>
+        </div>
+      </details>
+
+      <!-- Cissus 1 – KUCH -->
+      <details class="plant-card" data-location="KUCH" data-plant-id="kuch-cissus-1">
+        <summary>
+          <div class="plant-main-title">
+            <span class="plant-name">Winorośl pokojowa (Cissus rombolistny) 1</span>
+            <span class="plant-latin">Cissus rhombifolia 'Ellen Danica'</span>
+          </div>
+          <div class="plant-icons">💧 ⛅ 🧪</div>
+          <span class="plant-chevron"></span>
+        </summary>
+        <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko obecne:</span>
+            <span class="plant-value">
+              Parapet PN‑Wsch lub podobne chłodniejsze, jasne stanowisko w kuchni.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko zalecane:</span>
+            <span class="plant-value">
+              Z dala od kaloryferów, jasne, ale nie gorące miejsce.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Podlewanie:</span>
+            <span class="plant-value">
+              Co 5–7 dni, rano, wodą odstaną; lubi lekko wilgotne, ale nie mokre podłoże.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Nawożenie:</span>
+            <span class="plant-value">
+              Co 2 tygodnie III–IX, nawóz do roślin zielonych, algi morskie dla odporności.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Doniczka / przesadzanie:</span>
+            <span class="plant-value">
+              Luźna doniczka, żyzne, lekko wilgotne podłoże, przesadzanie co 1–2 lata.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Typowe problemy:</span>
+            <span class="plant-value">Brązowe końcówki liści, zasychanie przy gorącym, suchym powietrzu.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Wskazówki serwisowe:</span>
+            <span class="plant-value">
+              Unikać kaloryferów, zapewnić wyższą wilgotność powietrza, można lekko zraszać (nie w pełnym słońcu).
+            </span>
+          </div>
+        </div>
+      </details>
+
+      <!-- Cissus 2 – KUCH -->
+      <details class="plant-card" data-location="KUCH" data-plant-id="kuch-cissus-2">
+        <summary>
+          <div class="plant-main-title">
+            <span class="plant-name">Winorośl pokojowa (Cissus rombolistny) 2</span>
+            <span class="plant-latin">Cissus rhombifolia 'Ellen Danica'</span>
+          </div>
+          <div class="plant-icons">💧 ⛅ 🧪</div>
+          <span class="plant-chevron"></span>
+        </summary>
+        <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko obecne:</span>
+            <span class="plant-value">Parapet w kuchni, jasne, ale nie gorące miejsce.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko zalecane:</span>
+            <span class="plant-value">Jak wyżej – chłodniejsze, jasne, bez kaloryfera.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Podlewanie:</span>
+            <span class="plant-value">Jak wyżej – co 5–7 dni.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Nawożenie:</span>
+            <span class="plant-value">Jak wyżej.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Doniczka / przesadzanie:</span>
+            <span class="plant-value">Jak wyżej.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Typowe problemy:</span>
+            <span class="plant-value">Jak wyżej.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Wskazówki serwisowe:</span>
+            <span class="plant-value">Jak wyżej.</span>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- ===================== Jadalnia ===================== -->
+    <section class="location-section" id="loc-JADL">
+      <h2 class="location-title">Jadalnia</h2>
+
+      <!-- Grubosz – JADL -->
+      <details class="plant-card" data-location="JADL" data-plant-id="jadl-grubosz-1">
+        <summary>
+          <div class="plant-main-title">
+            <span class="plant-name">Grubosz – na stołku</span>
+            <span class="plant-latin">Crassula ovata</span>
+          </div>
+          <div class="plant-icons">💧 ☀️ 🧪</div>
+          <span class="plant-chevron"></span>
+        </summary>
+        <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko obecne:</span>
+            <span class="plant-value">Jadalnia, ok. 3 m od okna balkonowego.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko zalecane:</span>
+            <span class="plant-value">
+              Może zostać, ważne dobre światło i przepuszczalne podłoże.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Podlewanie:</span>
+            <span class="plant-value">Jak w sypialni – co 2–3 tygodnie, po przeschnięciu podłoża.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Nawożenie:</span>
+            <span class="plant-value">Jak w sypialni – 1×/miesiąc w sezonie.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Doniczka / przesadzanie:</span>
+            <span class="plant-value">Jak w sypialni – ciasna doniczka, co 2–3 lata.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Typowe problemy:</span>
+            <span class="plant-value">Jak w sypialni.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Wskazówki serwisowe:</span>
+            <span class="plant-value">Jak w sypialni.</span>
+          </div>
+        </div>
+      </details>
+
+      <!-- Haworsja – JADL -->
+      <details class="plant-card" data-location="JADL" data-plant-id="jadl-haworsja-1">
+        <summary>
+          <div class="plant-main-title">
+            <span class="plant-name">Haworsja pasiasta – małe doniczki</span>
+            <span class="plant-latin">Haworthia fasciata</span>
+          </div>
+          <div class="plant-icons">💧 ☀️</div>
+          <span class="plant-chevron"></span>
+        </summary>
+        <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko:</span>
+            <span class="plant-value">Jasne, rozproszone światło w jadalni.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Podlewanie:</span>
+            <span class="plant-value">Co 2–3 tygodnie, zimą rzadziej.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Nawożenie:</span>
+            <span class="plant-value">1×/miesiąc w sezonie, nawóz do kaktusów.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Doniczka / przesadzanie:</span>
+            <span class="plant-value">Ciasna doniczka, co 2–3 lata.</span>
+          </div>
+        </div>
+      </details>
+
+      <!-- Pelargonia – JADL -->
+      <details class="plant-card" data-location="JADL" data-plant-id="jadl-pelargonia-1">
+        <summary>
+          <div class="plant-main-title">
+            <span class="plant-name">Pelargonia – jadalnia</span>
+            <span class="plant-latin">Pelargonium</span>
+          </div>
+          <div class="plant-icons">💧💧 ☀️ 🧪</div>
+          <span class="plant-chevron"></span>
+        </summary>
+        <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko obecne:</span>
+            <span class="plant-value">Jadalnia, blisko okna balkonowego, bardzo jasno.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko zalecane:</span>
+            <span class="plant-value">Jak w salonie – dużo słońca i przewiew.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Podlewanie:</span>
+            <span class="plant-value">Jak w salonie – obficie po przeschnięciu.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Nawożenie:</span>
+            <span class="plant-value">Jak w salonie – co 7–10 dni w sezonie.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Doniczka / przesadzanie:</span>
+            <span class="plant-value">Jak w salonie.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Typowe problemy:</span>
+            <span class="plant-value">Jak w salonie.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Wskazówki serwisowe:</span>
+            <span class="plant-value">Jak w salonie.</span>
+          </div>
+        </div>
+      </details>
+      
+      <!-- Wawrzyn – JADL -->
+      <details class="plant-card" data-location="JADL" data-plant-id="jadl-wawrzyn-1">
+        <summary>
+          <div class="plant-main-title">
+            <span class="plant-name">Wawrzyn szlachetny (liść laurowy)</span>
+            <span class="plant-latin">Laurus nobilis</span>
+          </div>
+          <div class="plant-icons">💧 ⛅ 🧪</div>
+          <span class="plant-chevron"></span>
+        </summary>
+        <div class="plant-body">
+          <div class="water-today">
+            <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
+            <label>
+              <input type="checkbox" class="water-checkbox" />
+            </label>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko obecne:</span>
+            <span class="plant-value">Przy oknie balkonowym zach strona.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko zalecane:</span>
+            <span class="plant-value">
+              Może zostać; lubi słońce i przewiew, na zewnątrz tylko w cieplejszym sezonie.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Podlewanie:</span>
+            <span class="plant-value">
+              Co 7–10 dni, rano, wodą odstaną; nie dopuszczać do całkowitego przesuszenia bryły.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Nawożenie:</span>
+            <span class="plant-value">
+              Co 2 tygodnie III–IX, nawóz uniwersalny lub do roślin zielonych, humus dla korzeni.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Doniczka / przesadzanie:</span>
+            <span class="plant-value">
+              Luźna doniczka, przesadzanie co 1–2 lata, można formować cięciem.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Typowe problemy:</span>
+            <span class="plant-value">Zasychanie końcówek liści przy zbyt suchym powietrzu lub przesuszeniu.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Wskazówki serwisowe:</span>
+            <span class="plant-value">
+              Utrzymywać umiarkowaną wilgotność, zapewnić dobrą cyrkulację powietrza.
+            </span>
           </div>
         </div>
       </details>
@@ -866,32 +1604,50 @@
       <details class="plant-card" data-location="JADL" data-plant-id="jadl-epipremnum-3">
         <summary>
           <div class="plant-main-title">
-            <span class="plant-name">Epipremnum ‘Marble Queen’ – 2 szt. na witrynce</span>
+            <span class="plant-name">Epipremnum ‘Marble Queen’ 2 szt. na witrynce</span>
             <span class="plant-latin">Epipremnum aureum</span>
           </div>
-          <div class="plant-icons" aria-hidden="true">💧 ⛅ 🧪</div>
+          <div class="plant-icons">💧 ⛅ 🧪</div>
           <span class="plant-chevron"></span>
         </summary>
-
         <div class="plant-body">
           <div class="water-today">
             <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
             <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
+              <input type="checkbox" class="water-checkbox" />
             </label>
           </div>
-
-          <div class="plant-row"><span class="plant-label">Stanowisko obecne:</span><span class="plant-value">Na szafkach w jadalni, jasne stanowisko.</span></div>
-          <div class="plant-row"><span class="plant-label">Stanowisko zalecane:</span><span class="plant-value">Jak w kuchni – jasne, rozproszone światło.</span></div>
-          <div class="plant-row"><span class="plant-label">Podlewanie:</span><span class="plant-value">Jak w kuchni – co 7–10 dni.</span></div>
-          <div class="plant-row"><span class="plant-label">Nawożenie:</span><span class="plant-value">Jak w kuchni.</span></div>
-          <div class="plant-row"><span class="plant-label">Doniczka / przesadzanie:</span><span class="plant-value">Jak w kuchni.</span></div>
-          <div class="plant-row"><span class="plant-label">Typowe problemy:</span><span class="plant-value">Jak w kuchni.</span></div>
-          <div class="plant-row"><span class="plant-label">Wskazówki serwisowe:</span><span class="plant-value">Jak w kuchni.</span></div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko obecne:</span>
+            <span class="plant-value">Na szafkach w jadalni, jasne stanowisko.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko zalecane:</span>
+            <span class="plant-value">Jak w kuchni – jasne, rozproszone światło.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Podlewanie:</span>
+            <span class="plant-value">Jak w kuchni – co 7–10 dni.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Nawożenie:</span>
+            <span class="plant-value">Jak w kuchni.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Doniczka / przesadzanie:</span>
+            <span class="plant-value">Jak w kuchni.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Typowe problemy:</span>
+            <span class="plant-value">Jak w kuchni.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Wskazówki serwisowe:</span>
+            <span class="plant-value">Jak w kuchni.</span>
+          </div>
         </div>
       </details>
-
+      
       <!-- Trzykrotka Purple Joy – JADL -->
       <details class="plant-card" data-location="JADL" data-plant-id="jadl-trzykrotka-1">
         <summary>
@@ -899,31 +1655,59 @@
             <span class="plant-name">Trzykrotka ‘Purple Joy’</span>
             <span class="plant-latin">Tradescantia</span>
           </div>
-          <div class="plant-icons" aria-hidden="true">💧 ⛅ 🧪</div>
+          <div class="plant-icons">💧 ⛅ 🧪</div>
           <span class="plant-chevron"></span>
         </summary>
-
         <div class="plant-body">
           <div class="water-today">
             <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
             <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
+              <input type="checkbox" class="water-checkbox" />
             </label>
           </div>
-
-          <div class="plant-row"><span class="plant-label">Stanowisko obecne:</span><span class="plant-value">Przy oknie balkonowym zach strona.</span></div>
-          <div class="plant-row"><span class="plant-label">Stanowisko zalecane:</span><span class="plant-value">Zimą może zostać, latem bardzo jasno.</span></div>
-          <div class="plant-row"><span class="plant-label">Podlewanie:</span><span class="plant-value">Co 5–7 dni.</span></div>
-          <div class="plant-row"><span class="plant-label">Nawożenie:</span><span class="plant-value">Co 2 tygodnie III–IX.</span></div>
-          <div class="plant-row"><span class="plant-label">Doniczka / przesadzanie:</span><span class="plant-value">Odmładzać przez sadzonki.</span></div>
-          <div class="plant-row"><span class="plant-label">Typowe problemy:</span><span class="plant-value">Wyciąganie pędów, zielenienie liści zimą.</span></div>
-          <div class="plant-row"><span class="plant-label">Wskazówki serwisowe:</span><span class="plant-value">Przycinać i ukorzeniać, zapewnić dużo światła.</span></div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko obecne:</span>
+            <span class="plant-value">Przy oknie balkonowym zach strona (jadalnia).</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko zalecane:</span>
+            <span class="plant-value">
+              Zimą może zostać, latem bardzo jasne stanowisko (bez palącego słońca), żeby nie zieleniała.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Podlewanie:</span>
+            <span class="plant-value">
+              Co 5–7 dni, rano, wodą odstaną; nie dopuszczać do całkowitego przesuszenia.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Nawożenie:</span>
+            <span class="plant-value">
+              Co 2 tygodnie III–IX, nawóz do roślin zielonych w rozcieńczonej dawce, delikatny humus ostrożnie.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Doniczka / przesadzanie:</span>
+            <span class="plant-value">
+              Średnio luźna doniczka, częściej odmładzać przez sadzonki niż przesadzać starą roślinę.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Typowe problemy:</span>
+            <span class="plant-value">Wyciąganie pędów, zielenienie liści zimą, suche końcówki.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Wskazówki serwisowe:</span>
+            <span class="plant-value">
+              Regularnie przycinać i ukorzeniać w wodzie, zapewnić dużo światła, szczególnie zimą.
+            </span>
+          </div>
         </div>
       </details>
     </section>
 
-    <!-- ===================== ŁAZIENKA ===================== -->
+    <!-- ===================== Łazienka ===================== -->
     <section class="location-section" id="loc-ŁAZ">
       <h2 class="location-title">Łazienka</h2>
 
@@ -934,31 +1718,59 @@
             <span class="plant-name">Szczawik trójkątny</span>
             <span class="plant-latin">Oxalis triangularis</span>
           </div>
-          <div class="plant-icons" aria-hidden="true">💧 ⛅</div>
+          <div class="plant-icons">💧 ⛅</div>
           <span class="plant-chevron"></span>
         </summary>
-
         <div class="plant-body">
           <div class="water-today">
             <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
             <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
+              <input type="checkbox" class="water-checkbox" />
             </label>
           </div>
-
-          <div class="plant-row"><span class="plant-label">Stanowisko obecne:</span><span class="plant-value">Łazienka, wilgotniejsze powietrze.</span></div>
-          <div class="plant-row"><span class="plant-label">Stanowisko zalecane:</span><span class="plant-value">Jasne, rozproszone światło.</span></div>
-          <div class="plant-row"><span class="plant-label">Podlewanie:</span><span class="plant-value">Gdy wierzchnia warstwa ziemi przeschnie.</span></div>
-          <div class="plant-row"><span class="plant-label">Nawożenie:</span><span class="plant-value">Delikatnie w sezonie.</span></div>
-          <div class="plant-row"><span class="plant-label">Doniczka / przesadzanie:</span><span class="plant-value">Z bulw/kłączy, co kilka lat.</span></div>
-          <div class="plant-row"><span class="plant-label">Typowe problemy:</span><span class="plant-value">Zasychanie przy przesuszeniu.</span></div>
-          <div class="plant-row"><span class="plant-label">Wskazówki serwisowe:</span><span class="plant-value">Może mieć okres spoczynku.</span></div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko obecne:</span>
+            <span class="plant-value">Kilka stanowisk w domu, tu – łazienka, wilgotniejsze powietrze.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko zalecane:</span>
+            <span class="plant-value">
+              Jasne, rozproszone światło, bez palącego słońca, lubi umiarkowaną wilgotność.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Podlewanie:</span>
+            <span class="plant-value">
+              Gdy wierzchnia warstwa ziemi przeschnie, nie dopuszczać do długiego przesuszenia.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Nawożenie:</span>
+            <span class="plant-value">
+              Delikatnie w sezonie, nawóz do roślin kwitnących lub zielonych w małej dawce.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Doniczka / przesadzanie:</span>
+            <span class="plant-value">
+              Z bulw/kłączy, przesadzanie co kilka lat lub przy zagęszczeniu.
+            </span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Typowe problemy:</span>
+            <span class="plant-value">Zasychanie przy przesuszeniu, wiotkie liście przy braku światła.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Wskazówki serwisowe:</span>
+            <span class="plant-value">
+              Może mieć okres spoczynku – wtedy ograniczyć podlewanie, pozwolić liściom zaschnąć i odrosnąć.
+            </span>
+          </div>
         </div>
       </details>
     </section>
 
-    <!-- ===================== BIURO ===================== -->
+    <!-- ===================== Biuro ===================== -->
     <section class="location-section" id="loc-BIU">
       <h2 class="location-title">Biuro</h2>
 
@@ -966,32 +1778,50 @@
       <details class="plant-card" data-location="BIU" data-plant-id="biu-cissus-3">
         <summary>
           <div class="plant-main-title">
-            <span class="plant-name">Winorośl pokojowa</span>
+            <span class="plant-name">Winorośl pokojowa (Cissus rombolistny)</span>
             <span class="plant-latin">Cissus rhombifolia 'Ellen Danica'</span>
           </div>
-          <div class="plant-icons" aria-hidden="true">💧 ⛅ 🧪</div>
+          <div class="plant-icons">💧 ⛅ 🧪</div>
           <span class="plant-chevron"></span>
         </summary>
-
         <div class="plant-body">
           <div class="water-today">
             <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
             <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
+              <input type="checkbox" class="water-checkbox" />
             </label>
           </div>
-
-          <div class="plant-row"><span class="plant-label">Stanowisko obecne:</span><span class="plant-value">Biuro, jasne stanowisko.</span></div>
-          <div class="plant-row"><span class="plant-label">Stanowisko zalecane:</span><span class="plant-value">Jak w kuchni.</span></div>
-          <div class="plant-row"><span class="plant-label">Podlewanie:</span><span class="plant-value">Co 5–7 dni.</span></div>
-          <div class="plant-row"><span class="plant-label">Nawożenie:</span><span class="plant-value">Jak w kuchni.</span></div>
-          <div class="plant-row"><span class="plant-label">Doniczka / przesadzanie:</span><span class="plant-value">Jak w kuchni.</span></div>
-          <div class="plant-row"><span class="plant-label">Typowe problemy:</span><span class="plant-value">Jak w kuchni.</span></div>
-          <div class="plant-row"><span class="plant-label">Wskazówki serwisowe:</span><span class="plant-value">Jak w kuchni.</span></div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko obecne:</span>
+            <span class="plant-value">Biuro, jasne stanowisko, z dala od kaloryfera.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko zalecane:</span>
+            <span class="plant-value">Jak w kuchni – chłodniejsze, jasne, bez gorącego powietrza.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Podlewanie:</span>
+            <span class="plant-value">Jak w kuchni – co 5–7 dni.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Nawożenie:</span>
+            <span class="plant-value">Jak w kuchni.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Doniczka / przesadzanie:</span>
+            <span class="plant-value">Jak w kuchni.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Typowe problemy:</span>
+            <span class="plant-value">Jak w kuchni.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Wskazówki serwisowe:</span>
+            <span class="plant-value">Jak w kuchni.</span>
+          </div>
         </div>
       </details>
-
+      
       <!-- Trzykrotka Purple Joy – BIU -->
       <details class="plant-card" data-location="BIU" data-plant-id="biu-trzykrotka-2">
         <summary>
@@ -999,31 +1829,49 @@
             <span class="plant-name">Trzykrotka ‘Purple Joy’ – biuro</span>
             <span class="plant-latin">Tradescantia</span>
           </div>
-          <div class="plant-icons" aria-hidden="true">💧 ⛅ 🧪</div>
+          <div class="plant-icons">💧 ⛅ 🧪</div>
           <span class="plant-chevron"></span>
         </summary>
-
         <div class="plant-body">
           <div class="water-today">
             <span><span class="material-symbols-outlined" style="font-size:18px;">water_drop</span>Podlane dziś?</span>
             <label>
-              <input type="checkbox" class="water-checkbox">
-              <span class="sr-only">Oznacz jako podlane dziś</span>
+              <input type="checkbox" class="water-checkbox" />
             </label>
           </div>
-
-          <div class="plant-row"><span class="plant-label">Stanowisko obecne:</span><span class="plant-value">Biuro, przy oknie.</span></div>
-          <div class="plant-row"><span class="plant-label">Stanowisko zalecane:</span><span class="plant-value">Jak w jadalni.</span></div>
-          <div class="plant-row"><span class="plant-label">Podlewanie:</span><span class="plant-value">Co 5–7 dni.</span></div>
-          <div class="plant-row"><span class="plant-label">Nawożenie:</span><span class="plant-value">Jak w jadalni.</span></div>
-          <div class="plant-row"><span class="plant-label">Doniczka / przesadzanie:</span><span class="plant-value">Jak w jadalni.</span></div>
-          <div class="plant-row"><span class="plant-label">Typowe problemy:</span><span class="plant-value">Jak w jadalni.</span></div>
-          <div class="plant-row"><span class="plant-label">Wskazówki serwisowe:</span><span class="plant-value">Jak w jadalni.</span></div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko obecne:</span>
+            <span class="plant-value">Biuro, przy oknie, jasne stanowisko.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Stanowisko zalecane:</span>
+            <span class="plant-value">Jak w jadalni – bardzo jasne, bez palącego słońca.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Podlewanie:</span>
+            <span class="plant-value">Jak w jadalni – co 5–7 dni.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Nawożenie:</span>
+            <span class="plant-value">Jak w jadalni.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Doniczka / przesadzanie:</span>
+            <span class="plant-value">Jak w jadalni.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Typowe problemy:</span>
+            <span class="plant-value">Jak w jadalni.</span>
+          </div>
+          <div class="plant-row">
+            <span class="plant-label">Wskazówki serwisowe:</span>
+            <span class="plant-value">Jak w jadalni.</span>
+          </div>
         </div>
       </details>
     </section>
 
-    <!-- ===================== DOMOWE NAWOZY ===================== -->
+    <!-- ===================== DOMOWE NAWOZY I BIOSTYMULATORY ===================== -->
     <section class="location-section" id="loc-DOMOWE">
       <h2 class="location-title">Domowe nawozy i biostymulatory</h2>
 
@@ -1034,15 +1882,14 @@
           </div>
           <span class="plant-chevron"></span>
         </summary>
-
         <div class="plant-body">
           <div class="domowe-box">
             <div class="domowe-title">💧 Woda po gotowaniu jajek</div>
             <div class="small">
               • Bogata w wapń i mikroelementy.<br>
-              • Stosować po ostudzeniu.<br>
+              • Stosować po całkowitym ostudzeniu.<br>
               • Idealna dla: fikusów, dracen, wawrzynu, epipremnum.<br><br>
-              <b>Dawkowanie:</b> 1×/2 tygodnie zamiast wody.
+              <b>Dawkowanie:</b> 1×/2 tygodnie zamiast zwykłej wody.
             </div>
           </div>
 
@@ -1050,7 +1897,7 @@
             <div class="domowe-title">🍌 Skórki banana (napar)</div>
             <div class="small">
               • Źródło potasu i magnezu.<br>
-              • Wspiera kwitnienie.<br>
+              • Wspiera kwitnienie i odporność.<br>
               • Idealne dla: storczyków, anturium, pelargonii.<br><br>
               <b>Przygotowanie:</b> 1 skórka + 300 ml gorącej wody, odstawić 24 h.<br>
               <b>Dawkowanie:</b> 1×/2 tygodnie.
@@ -1060,39 +1907,40 @@
           <div class="domowe-box">
             <div class="domowe-title">🌿 Humus (biohumus)</div>
             <div class="small">
-              • Delikatny, bezpieczny.<br>
-              • Wspiera korzenie.<br>
-              • Idealny dla wszystkich roślin.<br><br>
-              <b>Dawkowanie:</b> 1×/miesiąc.
+              • Delikatny, bezpieczny, nie przenawozi.<br>
+              • Wspiera korzenie i mikrobiologię podłoża.<br>
+              • Idealny dla wszystkich roślin, także wrażliwych.<br><br>
+              <b>Dawkowanie:</b> 1×/miesiąc (lub częściej w małych dawkach).
             </div>
           </div>
 
           <div class="domowe-box">
-            <div class="domowe-title">🌊 Algi morskie</div>
+            <div class="domowe-title">🌊 Algi morskie (wyciąg)</div>
             <div class="small">
-              • Silny biostymulator.<br>
-              • Poprawia odporność i wybarwienie.<br>
+              • Silny biostymulator, nie nawóz.<br>
+              • Poprawia odporność, regenerację, wybarwienie liści.<br>
               • Idealne dla: epipremnum, anturium, storczyków, cissusa.<br><br>
-              <b>Dawkowanie:</b> 1×/miesiąc.
+              <b>Dawkowanie:</b> 1×/miesiąc lub przy spadku formy.
             </div>
           </div>
 
           <div class="domowe-box">
-            <div class="domowe-title">🥚 Skorupki jaj</div>
+            <div class="domowe-title">🥚 Skorupki jaj (proszek)</div>
             <div class="small">
-              • Źródło wapnia.<br>
-              • Podnosi pH podłoża.<br><br>
-              <b>Przygotowanie:</b> Wysuszyć, zmielić.<br>
-              <b>Dawkowanie:</b> Szczypta do podłoża.
+              • Źródło wapnia, podnosi pH podłoża.<br>
+              • Dobre dla roślin lubiących twardszą wodę.<br><br>
+              <b>Przygotowanie:</b> Wysuszyć, zmielić na proszek.<br>
+              <b>Dawkowanie:</b> szczypta do podłoża przy przesadzaniu.
             </div>
           </div>
 
           <div class="domowe-box">
             <div class="domowe-title">☕ Fusy z kawy</div>
             <div class="small">
-              • Zakwaszają podłoże.<br>
+              • Zakwaszają podłoże, dodają azotu.<br>
+              • Używać ostrożnie — łatwo przenawozić.<br>
               • Dobre dla: paproci, anturium, skrzydłokwiatu.<br><br>
-              <b>Dawkowanie:</b> 1 łyżeczka raz na 1–2 miesiące.
+              <b>Dawkowanie:</b> 1 łyżeczka wymieszana z ziemią raz na 1–2 miesiące.
             </div>
           </div>
         </div>
@@ -1105,75 +1953,282 @@
           </div>
           <span class="plant-chevron"></span>
         </summary>
-
         <div class="plant-body">
           <div class="domowe-box">
             <div class="domowe-title">Czego unikać</div>
             <div class="small">
-              ❌ świeże fusy kawy – pleśń<br>
-              ❌ skórki banana zakopane w ziemi – pleśń<br>
-              ❌ mleko bez rozcieńczenia – fermentacja<br>
+              ❌ świeże fusy kawy na ziemi – pleśń, muszki<br>
+              ❌ skórki banana zakopane w doniczce – pleśń, zapach<br>
+              ❌ mleko bez rozcieńczenia – fermentacja, smród<br>
               ❌ woda po makaronie z solą – szkodzi korzeniom<br>
-              ❌ woda z cukrem – pleśń i muszki
+              ❌ woda z cukrem/miodem – pleśń, grzyby, muszki
             </div>
           </div>
         </div>
       </details>
     </section>
 
-    <!-- ===================== LEGENDA ===================== -->
+    <!-- LEGENDA IKON POTRZEB -->
     <section class="legend-box" aria-label="Legenda ikon potrzeb">
       <div class="legend-title">Legenda ikon potrzeb</div>
-
-      <div class="legend-row"><span class="legend-label">💧</span>
-      <span>niskie / umiarkowane zapotrzebowanie na wodę</span></div>
-      <div class="legend-row"><span class="legend-label">💧💧</span>
-      <span>więcej wody, podłoże częściej wilgotne</span>
+      <div class="legend-row">
+        <span class="legend-label">💧</span>
+        <span>niskie / umiarkowane zapotrzebowanie na wodę</span>
       </div>
-
+      <div class="legend-row">
+        <span class="legend-label">💧💧</span>
+        <span>więcej wody, podłoże częściej wilgotne</span>
+      </div>
       <div class="legend-row">
         <span class="legend-label">☀️</span>
         <span>stanowisko słoneczne, dużo światła</span>
       </div>
-
       <div class="legend-row">
         <span class="legend-label">⛅</span>
         <span>jasne, rozproszone światło / półcień</span>
       </div>
-
       <div class="legend-row">
         <span class="legend-label">☁️</span>
         <span>stanowisko bardziej cieniste</span>
       </div>
-
       <div class="legend-row">
         <span class="legend-label">🧪</span>
         <span>nawożenie i biostymulatory ważne dla formy rośliny</span>
       </div>
     </section>
-      <div class="legend-row">
-        <span class="legend-label">🧪</span>
-        <span>nawożenie i biostymulatory ważne dla formy rośliny</span>
-      </div>
-    </section>
-    <!-- ===================== STOPKA ===================== -->
-    <footer class="app-footer">
-      <p>
-        TWOJE KWIATY • wersja mobilna<br>
-        Stworzona z miłości do roślin 🌿
-      </p>
-    </footer>
 
+    <!-- STOPKA / META -->
+    <p style="text-align:center; font-size:12px; color:#5b6c5c; margin-top:20px;">
+      TWOJE KWIATY • wersja mobilna<br>
+      Stworzona z miłości do roślin 🌿
+    </p>
   </main>
 
-  <!-- ===================== PRZYCISK GÓRA ===================== -->
+  <!-- Przycisk "góra" -->
   <button id="backToTop" aria-label="Wróć na górę">
     <span class="material-symbols-outlined">arrow_upward</span>
   </button>
 
-  <!-- ===================== SKRYPTY ===================== -->
-  <script src="script.js" defer></script>
+  <script>
+    // Klucze localStorage
+    const STORAGE_KEY_DATE = "plants_last_date";
+    const STORAGE_KEY_WATERED = "plants_watered_today";
 
+    const wateredTodaySpan = document.getElementById("wateredToday");
+    const wateredTotalSpan = document.getElementById("wateredTotal");
+    const counterBadgeText = document.getElementById("counterBadgeText");
+    const backToTopBtn = document.getElementById("backToTop");
+
+    const plantCards = Array.from(document.querySelectorAll(".plant-card"));
+    const checkboxes = Array.from(document.querySelectorAll(".water-checkbox"));
+
+    // Ustaw licznik total na liczbę roślin (checkboxów)
+    wateredTotalSpan.textContent = checkboxes.length.toString();
+
+    // Akordeon: tylko jedna karta otwarta
+    plantCards.forEach(card => {
+      card.addEventListener("toggle", () => {
+        if (card.open) {
+          plantCards.forEach(other => {
+            if (other !== card) other.open = false;
+          });
+        }
+      });
+    });
+
+    // Funkcja: lokalna data YYYY-MM-DD
+    function getLocalIsoDate() {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      return `${y}-${m}-${day}`;
+    }
+
+    // Funkcja: ms do lokalnej północy
+    function msUntilLocalMidnight() {
+      const now = new Date();
+      const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+      return tomorrow - now;
+    }
+
+    // Funkcja: reset stanu podlewania
+    function resetWateringState() {
+      const today = getLocalIsoDate();
+      localStorage.setItem(STORAGE_KEY_DATE, today);
+      localStorage.setItem(STORAGE_KEY_WATERED, JSON.stringify({}));
+      checkboxes.forEach(cb => (cb.checked = false));
+      wateredTodaySpan.textContent = "0";
+      updateBadgeText(0, checkboxes.length);
+    }
+
+    // Zaplanowanie resetu o północy lokalnej
+    function scheduleMidnightReset() {
+      const first = msUntilLocalMidnight();
+      setTimeout(() => {
+        resetWateringState();
+        setInterval(() => {
+          resetWateringState();
+        }, 24 * 60 * 60 * 1000);
+      }, first);
+    }
+
+    // Funkcja: aktualizacja badge tekstu
+    function updateBadgeText(count, total) {
+      if (count === 0) {
+        counterBadgeText.textContent = "Wszystko przed Tobą 🌱";
+      } else if (count < total) {
+        counterBadgeText.textContent = "Pięknie, tak trzymaj 💧";
+      } else {
+        counterBadgeText.textContent = "Wszystko podlane na dziś ✅";
+      }
+    }
+
+    // Nadanie aria-label dla checkboxów
+    function initCheckboxAriaLabels() {
+      checkboxes.forEach(cb => {
+        const card = cb.closest(".plant-card");
+        const plantNameEl = card ? card.querySelector(".plant-name") : null;
+        const plantName = plantNameEl ? plantNameEl.textContent.trim() : "roślina";
+        cb.setAttribute("aria-label", `Podlane dziś: ${plantName}`);
+      });
+    }
+
+    // Odczyt stanu z localStorage
+    function loadState() {
+      const today = getLocalIsoDate();
+      const savedDate = localStorage.getItem(STORAGE_KEY_DATE);
+      let savedWatered = {};
+
+      if (savedDate === today) {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY_WATERED);
+          if (raw) savedWatered = JSON.parse(raw);
+        } catch (e) {
+          savedWatered = {};
+        }
+      } else {
+        // Nowy dzień – reset
+        localStorage.setItem(STORAGE_KEY_DATE, today);
+        localStorage.setItem(STORAGE_KEY_WATERED, JSON.stringify({}));
+      }
+
+      let count = 0;
+      checkboxes.forEach(cb => {
+        const card = cb.closest(".plant-card");
+        const id = card.getAttribute("data-plant-id");
+        const isWatered = !!savedWatered[id];
+        cb.checked = isWatered;
+        if (isWatered) count++;
+      });
+
+      wateredTodaySpan.textContent = count.toString();
+      updateBadgeText(count, checkboxes.length);
+    }
+
+    // Zapis stanu do localStorage
+    function saveState() {
+      const today = getLocalIsoDate();
+      localStorage.setItem(STORAGE_KEY_DATE, today);
+
+      const state = {};
+      checkboxes.forEach(cb => {
+        const card = cb.closest(".plant-card");
+        const id = card.getAttribute("data-plant-id");
+        if (cb.checked) state[id] = true;
+      });
+
+      localStorage.setItem(STORAGE_KEY_WATERED, JSON.stringify(state));
+    }
+
+    // Obsługa zmian checkboxów
+    checkboxes.forEach(cb => {
+      cb.addEventListener("change", () => {
+        let count = 0;
+        checkboxes.forEach(c => {
+          if (c.checked) count++;
+        });
+        wateredTodaySpan.textContent = count.toString();
+        updateBadgeText(count, checkboxes.length);
+        saveState();
+      });
+    });
+
+    // Przycisk "góra"
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 260) {
+        backToTopBtn.classList.add("visible");
+      } else {
+        backToTopBtn.classList.remove("visible");
+      }
+    });
+
+    backToTopBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Inicjalizacja
+    initCheckboxAriaLabels();
+    loadState();
+    scheduleMidnightReset();
+  </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const allSections = Array.from(document.querySelectorAll(".location-section"));
+
+  document.querySelectorAll(".water-checkbox").forEach(checkbox => {
+    checkbox.addEventListener("change", () => {
+      const details = checkbox.closest("details");
+      if (!details) return;
+
+      const section = details.closest(".location-section");
+      const plantCards = Array.from(section.querySelectorAll("details.plant-card"));
+      const index = plantCards.indexOf(details);
+
+      // Zamknij aktualną roślinę
+      details.open = false;
+
+      // Jeśli to NIE jest ostatnia roślina → otwórz następną
+      if (index < plantCards.length - 1) {
+        const next = plantCards[index + 1];
+        setTimeout(() => {
+          next.open = true;
+          next.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 150);
+        return;
+      }
+
+      // Jeśli to OSTATNIA roślina → przejdź do kolejnej sekcji
+      const currentSectionIndex = allSections.indexOf(section);
+      const nextSection = allSections[currentSectionIndex + 1];
+
+      if (nextSection) {
+        const nextPlants = Array.from(nextSection.querySelectorAll("details.plant-card"));
+        const firstPlant = nextPlants[0];
+
+        setTimeout(() => {
+          nextSection.scrollIntoView({ behavior: "smooth", block: "start" });
+          if (firstPlant) {
+            firstPlant.open = true;
+          }
+        }, 200);
+      }
+    });
+  });
+});
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('/sw.js')
+        .then(function (registration) {
+          console.log('ServiceWorker zarejestrowany:', registration.scope);
+        })
+        .catch(function (error) {
+          console.log('Błąd rejestracji ServiceWorkera:', error);
+        });
+    });
+  }
+</script>
 </body>
 </html>
-
