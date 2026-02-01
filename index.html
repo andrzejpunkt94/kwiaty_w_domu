@@ -1937,7 +1937,7 @@ summary::-webkit-details-marker {
       </div>
       <div class="legend-row">
         <span class="legend-label">💧💧</span>
-        <span>wyższe zapotrzebowanie na wodę, podłoże częściej wilgotne</span>
+        <span>więcej wody, podłoże częściej wilgotne</span>
       </div>
       <div class="legend-row">
         <span class="legend-label">☀️</span>
@@ -2148,10 +2148,11 @@ document.addEventListener("DOMContentLoaded", () => {
       // Zamknij aktualną roślinę
       details.open = false;
 
-      // Jeśli to NIE jest ostatnia roślina → przewiń do następnej
+      // Jeśli to NIE jest ostatnia roślina → otwórz następną
       if (index < plantCards.length - 1) {
         const next = plantCards[index + 1];
         setTimeout(() => {
+          next.open = true;
           next.scrollIntoView({ behavior: "smooth", block: "start" });
         }, 150);
         return;
@@ -2162,13 +2163,20 @@ document.addEventListener("DOMContentLoaded", () => {
       const nextSection = allSections[currentSectionIndex + 1];
 
       if (nextSection) {
+        const nextPlants = Array.from(nextSection.querySelectorAll("details.plant-card"));
+        const firstPlant = nextPlants[0];
+
         setTimeout(() => {
           nextSection.scrollIntoView({ behavior: "smooth", block: "start" });
+          if (firstPlant) {
+            firstPlant.open = true;
+          }
         }, 200);
       }
     });
   });
 });
 </script>
+
 </body>
 </html>
