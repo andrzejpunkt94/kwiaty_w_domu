@@ -216,13 +216,23 @@ summary::-webkit-details-marker {
       border-top: 1px solid #f0f0f0;
       font-size: 13px;
       line-height: 1.4;
+     }
+
+   /* Podświetlenie następnej rośliny (tryb turbo) */
+   .highlight-next {
+      animation: highlightFade 1.2s ease-out;
+     }
+
+   @keyframes highlightFade {
+     0%   { background-color: #e7f3ea; }
+     100% { background-color: transparent; }
     }
 
-    .plant-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      margin: 4px 0;
+   .plant-row {
+     display: flex;
+     justify-content: space-between;
+     gap: 10px;
+     margin: 4px 0;
     }
 
     .plant-label {
