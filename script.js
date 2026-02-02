@@ -211,7 +211,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const currentSectionIndex = allSections.indexOf(section);
       const nextSection = allSections[currentSectionIndex + 1];
 
-      if (nextSection) {
+      /* 🚫 NOWA LOGIKA:
+         Jeśli następna sekcja to DOMOWE NAWOZY — NIE otwieraj jej automatycznie */
+      if (nextSection && nextSection.id !== "loc-DOMOWE") {
         const nextPlants = Array.from(nextSection.querySelectorAll("details.plant-card"));
         const firstPlant = nextPlants[0];
 
@@ -244,4 +246,5 @@ if ("serviceWorker" in navigator) {
 initCheckboxAriaLabels();
 loadState();
 scheduleMidnightReset();
+
 
