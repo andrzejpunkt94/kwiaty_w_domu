@@ -13,8 +13,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Kwiaty w domu">
-  <link rel="apple-touch-icon" href="icons/icon-192.png">
 
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
 
   <!-- Optymalizacja ładowania Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -408,8 +408,8 @@ input[type="checkbox"]:focus-visible {
   }
 }
 </style>
-
 </head>
+
 <body>
   <main>
     <header>
@@ -2172,6 +2172,7 @@ input[type="checkbox"]:focus-visible {
     loadState();
     scheduleMidnightReset();
   </script>
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const allSections = Array.from(document.querySelectorAll(".location-section"));
@@ -2202,25 +2203,25 @@ document.addEventListener("DOMContentLoaded", () => {
       const currentSectionIndex = allSections.indexOf(section);
       const nextSection = allSections[currentSectionIndex + 1];
 
-      if (nextSection) {
+      // 🚫 Jeśli następna sekcja to DOMOWE NAWOZY — NIE otwieraj jej automatycznie
+      if (nextSection && nextSection.id !== "loc-DOMOWE") {
         const nextPlants = Array.from(nextSection.querySelectorAll("details.plant-card"));
         const firstPlant = nextPlants[0];
 
         setTimeout(() => {
           nextSection.scrollIntoView({ behavior: "smooth", block: "start" });
-          if (firstPlant) {
-            firstPlant.open = true;
-          }
+          if (firstPlant) firstPlant.open = true;
         }, 200);
       }
     });
   });
 });
 </script>
+
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function () {
-      navigator.serviceWorker.register('/sw.js')
+      navigator.serviceWorker.register('./sw.js')
         .then(function (registration) {
           console.log('ServiceWorker zarejestrowany:', registration.scope);
         })
